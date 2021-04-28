@@ -1,0 +1,33 @@
+
+baseURL: https://danielalcaide.com
+title: Daniel Alcaide
+paginate: 5
+theme: "hugo-PaperMod"
+defaultContentLanguage: es
+languageCode: es
+
+enableRobotsTXT: true
+
+minify:
+    disableXML: true
+    minifyOutput: false
+
+params:
+    env: production # to enable google analytics, opengraph, twitter-cards and schema.
+    title: Daniel Alcaide
+    description: "Data Scientist"
+    keywords: [Blog, Portfolio, Data Science]
+    author: Me
+    DateFormat: "02-01-2006"
+    defaultTheme: auto # dark, light
+    disableThemeToggle: false
+
+    ShowReadingTime: true
+    ShowShareButtons: true
+    ShowPostNavLinks: false
+    ShowBreadCrumbs: false
+    
+    # home-info mode
+    homeInfoParams:
+      Title: "\U0001F44B Hola, soy Daniel Alcaide"
+      Content: Este es mi sitio web personal donde escribo sobre ciencia de datos.

@@ -1,0 +1,176 @@
+---
+title: "Detección de comunidades en redes"
+author: "Daniel Alcaide"
+date: '2020-01-21'
+tags: ["r"]
+categories: ["tutoriales"]
+url: /deteccion-comunidades-redes
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>La aristas de una red se pueden clasificar en uniones débiles y fuertes. Los vínculos débiles son aquellas conexiones que al eliminarlas la distancia mínima entre los nodos aumenta. Esta distancia calculada a partir de el camino mínimo entre los vértices se conoce como <em>span</em>. Por contra, un vínculo fuerte es aquel que aunque se elimine la arista que conectan dos vértices la distancia entre ambos prácticamente no cambia.</p>
+<!--more-->
+<p>La aristas de una red se pueden clasificar en uniones débiles y fuertes. Los vínculos débiles son aquellas conexiones que al eliminarlas la distancia mínima entre los nodos aumenta. Esta distancia calculada a partir de el camino mínimo entre los vértices se conoce como <em>span</em>. Por contra, un vínculo fuerte es aquel que aunque se elimine la arista que conectan dos vértices la distancia entre ambos prácticamente no cambia.</p>
+<p>El sociólogo Mark Granovetter definió que las redes sociales son un conjunto de comunidades unidas por vínculos débiles. Esta afirmación nos permite estudiar las redes sociales desde otro punto de vista investigando cuales son las diferencias entre las diferentes comunidades de la red.</p>
+<p>Las aristas ilustran la conexión o proximidad entres los nodos. Las comunidades las podemos definir como un grupo de nodos densamente interconectados y escasamente conectados al resto de la red. La modularidad nos permite estimar el grado de interconectividad entre los nodos y por ello es una medida esencial para la detección de comunidades.</p>
+<div id="modularidad" class="section level2">
+<h2>Modularidad</h2>
+<p>La modularidad se define como la fracción de enlaces que están dentro de cada comunidad menos el valor esperado de una distribución al azar. Este valor nos permite estimar y comparar las diferentes agrupaciones de una red. Formalmente la modularidad <span class="math inline">\(Q\)</span> la expresamos como:</p>
+<p><span class="math display">\[Q = \sum_{ij}\left [ \frac{A_{ij}}{2m} - \frac{k_{i} k_{j}}{(2m)(2m)}\right ] \delta (c_{i},c_{j}) = \sum_{i =1}^{c}(e_{ii} - a_{i}^{2})\]</span></p>
+<p>Donde <span class="math inline">\(A_{ij}\)</span> es la matriz de adyacencias, los valores <span class="math inline">\(k\)</span> es el grado de los nodos, <span class="math inline">\(m\)</span> es el número total de aristas en el grafo y la función <span class="math inline">\(\delta\)</span> determina si los vértices <span class="math inline">\(i\)</span> y <span class="math inline">\(j\)</span> pertenecen a la misma comunidad.</p>
+<p>Por otro lado, la formula anterior se puede simplificar calculando <span class="math inline">\(Q = \sum_{i =1}^{c}(e_{ii} - a_{i}^{2})\)</span> donde <span class="math inline">\(e_{ii}\)</span> es la fracción de aristas dentro de la comunidad <span class="math inline">\(c_{i}\)</span> y <span class="math inline">\(a_{i}\)</span> es la fracción de enlaces con al menos un extremos en la comunidad <span class="math inline">\(c_{i}\)</span>.</p>
+<p><strong>Nota 1:</strong> Lo que conseguimos al dividir las aristas en cada <span class="math inline">\(i\)</span> y <span class="math inline">\(j\)</span> por el número de aristas <span class="math inline">\(m\)</span> es obtener la proporción total. En caso de una red no dirigida, el cociente debería ser <span class="math inline">\(m\)</span> en lugar de <span class="math inline">\(2m\)</span>.</p>
+<p><strong>Nota 2:</strong> La combinación <span class="math inline">\(k_{i} k_{j}\)</span> representa los resultados que se obtendrían si <span class="math inline">\(i\)</span> y <span class="math inline">\(j\)</span> fueran sucesos independientes.</p>
+<div id="cálculo-de-la-modularidad" class="section level3">
+<h3>Cálculo de la modularidad</h3>
+<p>Para ilustrar el cálculo de la modularidad en esta sección utilizaremos la red del club de karate de <a href="https://en.wikipedia.org/wiki/Zachary%27s_karate_club">Zachary</a>.</p>
+<p>La siguiente imagen muestra la matriz de adyacencias de la red, donde hemos definido manualmente cuatro comunidades (recuadro verde). A partir de estas comunidades vamos a estimar la modularidad:</p>
+<div class="figure">
+<img src="/tutoriales/deteccion_comunidades_redes_files/karate_adyacencia.png" alt="" />
+<p class="caption">Figura 1: Tabla de ayacencias para la red Karate</p>
+</div>
+<p>Si contamos el número de aristas dentro de cada comunidad y entre las comunidades, obtenemos la siguiente tabla:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="center">I</th>
+<th align="center">II</th>
+<th align="center">III</th>
+<th align="center">IV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>I</strong></td>
+<td align="center">48</td>
+<td align="center">4</td>
+<td align="center">2</td>
+<td align="center">8</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>II</strong></td>
+<td align="center">4</td>
+<td align="center">12</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>III</strong></td>
+<td align="center">2</td>
+<td align="center">0</td>
+<td align="center">8</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>IV</strong></td>
+<td align="center">8</td>
+<td align="center">0</td>
+<td align="center">5</td>
+<td align="center">50</td>
+</tr>
+</tbody>
+</table>
+<p>Calculando los valores relativos de la tabla, en base al total de aristas en la red (es decir, 156) obtenemos la matriz <span class="math inline">\(A\)</span>:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="center">I</th>
+<th align="center">II</th>
+<th align="center">III</th>
+<th align="center">IV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>I</strong></td>
+<td align="center">0,31</td>
+<td align="center">0,03</td>
+<td align="center">0,01</td>
+<td align="center">0,05</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>II</strong></td>
+<td align="center">0,03</td>
+<td align="center">0,08</td>
+<td align="center">0,00</td>
+<td align="center">0,00</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>III</strong></td>
+<td align="center">0,01</td>
+<td align="center">0,00</td>
+<td align="center">0,05</td>
+<td align="center">0,03</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>IV</strong></td>
+<td align="center">0,05</td>
+<td align="center">0,00</td>
+<td align="center">0,03</td>
+<td align="center">0,32</td>
+</tr>
+</tbody>
+</table>
+<p>Volviendo a la fórmula anterior <span class="math inline">\(Q = \sum_{i =1}^{c}(e_{ii} - a_{i}^{2})\)</span>. La proporción de enlaces dentro de cada comunidad se encuentran en la columna <span class="math inline">\(e\)</span> y el valor esperado de enlaces considerando que la asignación fuera aleatoria en la columna <span class="math inline">\(a^2\)</span>. La modularidad, por tanto, se puede considerar la suma de la diferencia.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="center"><span class="math inline">\(e\)</span></th>
+<th align="center"><span class="math inline">\(a\)</span></th>
+<th align="center"><span class="math inline">\(a^2\)</span></th>
+<th align="center"><span class="math inline">\(e-a^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>I</strong></td>
+<td align="center">0,31</td>
+<td align="center">0,31 + 0,03 + 0,01 + 0,05 = 0,4</td>
+<td align="center">0,16</td>
+<td align="center">0,15</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>II</strong></td>
+<td align="center">0,08</td>
+<td align="center">0,03 + 0,08 = 0,11</td>
+<td align="center">0,01</td>
+<td align="center">0,07</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>III </strong></td>
+<td align="center">0,05</td>
+<td align="center">0,01 + 0,05 + 0,03 = 0,12</td>
+<td align="center">0,01</td>
+<td align="center">0,04</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>IV</strong></td>
+<td align="center">0,32</td>
+<td align="center">0,05 + 0,03 + 0,32 = 0,4</td>
+<td align="center">0,16</td>
+<td align="center">0,16</td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(Q\)</span> = 0,42</td>
+</tr>
+</tbody>
+</table>
+<p>El resultado de la modularidad para esta red utilizando las cuatro comunidades definidas es 0,42.</p>
+</div>
+<div id="referencias-adicionales" class="section level3">
+<h3>Referencias adicionales</h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=Tc7R9oMqLRI">Video sobre el cálculo de la modularidad (inglés)</a></li>
+<li><a href="http://ars-uns.blogspot.com/2013/11/ars-101-modularidad.html">Otro artículo sobre la modulariad</a></li>
+</ul>
+</div>
+</div>

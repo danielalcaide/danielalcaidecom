@@ -1,0 +1,119 @@
+---
+title: "Crear temas en ggplot2"
+author: "Daniel Alcaide"
+date: '2020-01-23'
+tags: ["r", "ggplot2"]
+categories: ["tutoriales"]
+url: /crear_temas_ggplot2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+library(tidyverse)
+```
+
+El paquete `ggplot2` se ha convertido en una herramienta fundamental para muchos usuarios de R. En este post trato explicar como crear temas personalizados para los gráficos, permitiendonos así ahorra tiempo y lineas de código.    
+
+<!--more-->
+
+Cuando estoy trabajando en un gráfico con R (y por supuesto con `ggplot2`) que voy a mostrar a otra personas siempre pierdo algo de tiempo modificando algunos de los parámetros del la función `theme()`, por ejemplo, quitando el color del fondo, ocultando los marcadores en los ejes o cambiando de posición la leyenda. Si tengo que crear varios gráficos acabo copiando y pegando la misma configuración de la función `theme` lo que provoca que el código sea más largo. En este post voy a explorar las posibilidades para darle otro estilo a nuestros gráficos, ya sea creando nosotros los temas o utilizando otros temas disponibles.
+
+## Creacción de una función personalizada
+
+Descubrí otro [post](http://joeystanley.com/blog/custom-themes-in-ggplot2) donde hablaban de crear sus propios temas personalizados lo cual me pareció muy interesante. Hasta entonces, era consciente de que habían varios temas implementados en el paquete `ggplot2` como el `theme_bw` que es muy útil cuando quieres un fromato sin el fondo gris como el que viene por defecto. Pero no sabía que los temas eran en esencia modificaciones del tema por defecto, en este caso `theme_grey`.
+
+```{r}
+theme_bw
+```
+
+Utilizando la definición de la función anterior como base, podemos definir nuestro `theme_custom`. Comenzamos con el tema `theme_classic` como base, pero vamos a definir un tamaño de letra y una fuente específica. Tal y como esta definido, el tema ya funcionaría aunque la personalización es muy limitada.
+
+```{r, include=FALSE}
+# Load fonts in windows using
+# extrafont::font_import()
+extrafont::loadfonts(device = "win")
+```
+
+```{r}
+theme_custom <- function () { 
+  theme_classic(base_size = 10, base_family = "Bahnschrift")
+}
+```
+
+Para modificar el resto de parámetros en el tema, debemos incluir el comando `%+replace%` junto con la función `theme`. Ya dentro de esta última función utilizamos los parametros habituales p. ej. `panel.background`, `legend.key`,  `panel.grid.major`, etc.
+
+```{r}
+theme_custom <- function () { 
+  theme_classic(base_size = 10, base_family = "Bahnschrift")  %+replace% 
+  theme(
+      panel.background  = element_blank(),
+      plot.background = element_rect(fill="#F8F8F8", colour=NA), 
+      legend.background = element_rect(fill="transparent", colour=NA),
+      legend.key = element_rect(fill="transparent", colour=NA),
+      legend.position="bottom"
+  )
+}
+
+```
+
+### Resultado
+
+Un vez tenemos nuestro tema podemos comenzar a aplicarlo. En la Figura \@ref(fig:por-defecto) vemos el resultado del gráfico con el tema por defecto y el la Figura \@ref(fig:mi-tema) el resultado con el `theme_custom`.
+
+```{r por-defecto, fig.cap="Diagrama de dispersión con el tema por defecto"}
+data(mtcars) 
+
+consumo_potencia <- mtcars %>% 
+  ggplot(aes(mpg, hp, color = cyl)) + 
+  geom_point(size = 3) + 
+  labs(title = "Consumo (millas/galón) por la potencia del vehículo", 
+       x = "Caballos de potencia", 
+       y = "Consumo (millas/galón)", 
+       color = "Num. cilindros")
+
+consumo_potencia
+```
+
+```{r mi-tema, fig.cap="Diagrama de dispersión con el tema personalizado"}
+consumo_potencia + theme_custom()
+```
+
+## Utilizar otros temas en ggplot2
+
+Si no queremos estar definiendo nosotros mismos los temas. También podemos recurrir al paquete [`ggthemr`](https://github.com/cttobin/ggthemr) o al paquete [`hrbrthemes`](https://hrbrmstr.github.io/hrbrthemes)  que nos permite aplicar otros temas creados por el desarrollador. 
+
+### El paquete hrbrthemes
+
+Este paquete creado/mantenido por (Bob Rudis)[https://rud.is/] nos proporciona una serie de funciones para darle un estilo diferente a nuestros gráficos en `ggplot2`. Aquí dejo un ejemplo del resultado.
+
+```{r grafico-hrbrthemes, fig.cap="Diagrama de dispersión utilizando el tema camoflauge del paquete hrbrthemes"}
+# Para instalar el paquete desde GitHub
+# devtools::install_github("hrbrmstr/hrbrthemes")
+
+consumo_potencia + 
+  hrbrthemes::theme_ipsum()
+```
+
+### El paquete ggthemr
+
+La peculiaridad de este paquete es que no se utilizan como los otros temas sino que se aplican estilos por defecto. Para activarlos, debemos ejecutarlos antes del código de nuestro gráfico. A continuación os dejo un ejemplo:
+
+
+```{r grafico-ggthemr, fig.cap="Diagrama de dispersión utilizando el tema camouflage del paquete ggthemr", message=FALSE, warning=FALSE}
+# 1. Primero debemos definir que tema queremos.
+# Puedes ver todos los temas disponibles en el repositorio del paquete: https://github.com/cttobin/ggthemr
+ggthemr::ggthemr('camouflage')
+
+# 2. Y a continuación ejecutar el gráfico.
+consumo_potencia
+```
+
+Para resetear el tema y volver al original debemos utilizar el comando `ggthemr_reset()`.
+
+
+Recientemente ha aparecido otro paquete 
+
+## Conclusión
+
+Para darle un estilo más personal a nuestro gráficos podemos utilizar temas predefinidos en paquetes como los de `hrbrthemes`, `ggthemr` o crear nosotros mismos los temas como si fueran funciones.
+

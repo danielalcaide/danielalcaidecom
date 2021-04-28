@@ -1,0 +1,125 @@
+---
+title: "Grafos aleatorios"
+author: "Daniel Alcaide"
+date: '2020-01-20'
+tags: ["grafos", "r"]
+categories: ["tutoriales"]
+url: /grafos_aleatorios
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>En el análisis de redes (o grafos) se necesitan instrumentos para estudiar las propiedades de los grafos encontrados en el mundo real. Para ello, necesitamos definir grafos realistas para evaluar aspectos claves de los grafos como el diámetro, el coeficiente de agrupación o la distribución de grado. Los grafos creados para tal propósito son grafos aleatorios, construidos a partir de un modelo.</p>
+<!--more-->
+<p>La estadística nos proporciona herramientas para analizar y comparar nuestros datos con funciones probabilísticas teóricas que nos facilitan la toma decisiones. En el análisis de grafos se necesitan también de instrumentos para estudiar las propiedades de los grafos encontrados en el mundo real. Para ello, necesitamos definir grafos realistas para evaluar aspectos claves de los grafos como el diámetro, el coeficiente de agrupación o la distribución de grado. Los grafos creados para tal propósito son grafos aleatorios, construidos a partir de un modelo.</p>
+<p>En este post se tratan tres modelos de grafos aleatorios como son:</p>
+<ul>
+<li>Modelo Erdös-Rényi</li>
+<li>Modelo Watts-Strogatz</li>
+<li>Modelo Barabasi-Albert</li>
+</ul>
+<div id="modelo-erdös-rényi" class="section level2">
+<h2>Modelo Erdös-Rényi</h2>
+<p>El modelo de Erdös-Rényi es un grafo aleatorio con <span class="math inline">\(N\)</span> vértices y <span class="math inline">\(M\)</span> aristas que se asignan con probabilidad <span class="math inline">\(p\)</span> de manera independiente. Cualquier topología generada en la red es igual de probable.</p>
+<p>Para estimar la probabilidad <span class="math inline">\(p\)</span> de que una pareja de nodos estén conectas se divide el número de aristas <span class="math inline">\(M\)</span> por el número total de posibles parejas<span class="math inline">\(M_{p}\)</span> de manera:</p>
+<p><span class="math display">\[p = \frac{M}{M_{p}}\]</span></p>
+<p>Recordemos que el número total de aristas se define como: <span class="math inline">\(M_{p} = \binom{n}{2} = \frac{n(n-1)}{2}\)</span> siendo N el número de vértices en el grafo.</p>
+<p>Alguna de las propiedades este modelo son:</p>
+<ul>
+<li>El diámetro de es de orden <span class="math inline">\(O\left ( log N \right )\)</span></li>
+<li>El grado promedio de un nodo es <span class="math inline">\(p(n-1)\)</span>. El grado máximo de un nodo es <span class="math inline">\((n-1)\)</span> y <span class="math inline">\(p\)</span> es la probabilidad la presencia de la arista. Lo mas relevante de la distribución del grado es que sigue una distribución Poisson , y queda lejos de las distribución de ley de potencias típicas en las redes sociales.</li>
+<li>El coeficiente de clustering en el modelo de Erdös-Rényi es un valor muy próximo al valor <span class="math inline">\(p\)</span>.</li>
+</ul>
+<div id="implementación-del-modelo-erdös-rényi-en-r" class="section level3">
+<h3>Implementación del modelo Erdös-Rényi en R</h3>
+<p>El modelo Erdös-Rényi esta incluido en el paquete <code>igraph</code>. El siguiente trozo de código muestra un ejemplo para generar una red de 50 nodos y 100 aristas.</p>
+<pre class="r"><code># Dependencias
+require(igraph)
+require(ggraph)
+
+# Creación del grafo 
+set.seed(42)
+erdos &lt;- erdos.renyi.game(50, 100,&quot;gnm&quot;)
+
+ggraph(erdos, layout = &#39;fr&#39;) + 
+  geom_node_point(size = 2.5) + 
+  geom_edge_fan(aes(alpha = ..index..), show.legend = FALSE) + 
+  theme_graph()</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-1"></span>
+<img src="/post/grafos_aleatorios_files/figure-html/unnamed-chunk-1-1.png" alt="Grafo Erdös-Rényi con 50 vértices y 100 arístas" width="672" />
+<p class="caption">
+Figura 1: Grafo Erdös-Rényi con 50 vértices y 100 arístas
+</p>
+</div>
+</div>
+</div>
+<div id="modelo-barabasi-albert" class="section level2">
+<h2>Modelo Barabasi-Albert</h2>
+<p>El modelo Barabasi-Albert genera las aristas a partir del grado de los nodos. A mayor grado del nodo mas probable es que genere una nueva arista en ese nodo. Este sistema se conoce como conexión preferencial (<em>preferential attachment</em>s) y se puede explicar con la paradoja de <em>“the rich get richer”</em>.</p>
+<p>Los nodos se añaden a la red de manera secuencial utilizando la probabilidad <span class="math inline">\(p_{i}\)</span> de que un nuevo nodo se conecte con <span class="math inline">\(i\)</span>, concretamente:</p>
+<p><span class="math display">\[p_{i} = \frac{ k_{i} } { \sum_{j} k_{j} }\]</span></p>
+<p>donde <span class="math inline">\(k_{i}\)</span> is el grado del nodo <span class="math inline">\(i\)</span> y la suma se realiza sobre todo los existentes nodos <span class="math inline">\(j\)</span>. El denominaodor se puede ver como el doble de aristas en la red.</p>
+<p>Como propiedades principales podemos destacar:</p>
+<ul>
+<li>El diámetro en este modelo es <span class="math inline">\(O(log \: log N)\)</span>. Estos valores son más pequeños que el modelo de Erdös-Rényi, ya que los nodos tienden a concentrase en hubs.</li>
+<li>La distribución de grado y el coeficiente de clustering se ajustan a una ley de potencias.</li>
+</ul>
+<div id="implementación-del-modelo-barabasi-albert-en-r" class="section level3">
+<h3>Implementación del modelo Barabasi-Albert en R</h3>
+<p>Al igual que el modelo anterior el modelo Barbasi-Albert se puede generar en R. A continuación se muestra un ejemplo:</p>
+<pre class="r"><code># Dependencias
+require(igraph)
+require(ggraph)
+
+# Creción del grafo 
+set.seed(42)
+barbasi &lt;- sample_pa(50, power = 2, directed = FALSE)
+# Nota: El factor de conexión preferencial es dos para hacer mas
+# visible su efecto.
+
+ggraph(barbasi, layout = &#39;fr&#39;) + 
+  geom_node_point(size = 2.5) + 
+  geom_edge_fan(aes(alpha = ..index..), show.legend = FALSE) + 
+  theme_graph()</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-2"></span>
+<img src="/post/grafos_aleatorios_files/figure-html/unnamed-chunk-2-1.png" alt="Grafo basado el modelo Barbasi-Albert con 50 vértices" width="672" />
+<p class="caption">
+Figura 2: Grafo basado el modelo Barbasi-Albert con 50 vértices
+</p>
+</div>
+</div>
+</div>
+<div id="modelo-watts-strogatz" class="section level2">
+<h2>Modelo Watts-Strogatz</h2>
+<p>El modelo presentado por Watts y Strogatz parte de un grafo con <span class="math inline">\(N\)</span> nodos donde estos nodos se conectan a sus dos vecinos mas cercanos describiendo una forma de anillo. Esta red en forma de anilla tiene un coeficiente de clustering alto pero también el diámetro del grafo los es.</p>
+<p>Por cada arista con probabilidad <span class="math inline">\(p\)</span> se evalúa la conexión y se cambia por cualquier otro nodo. Si <span class="math inline">\(p=0\)</span> el anillo inicial se queda intacto, sin embargo si <span class="math inline">\(p=1\)</span> los cambios de aristas generan desorden en la red.</p>
+<p>Sus propiedades principales son:</p>
+<ul>
+<li>El diámetro es alto si <span class="math inline">\(p\)</span> es próximo a 0. Si <span class="math inline">\(p\)</span> es próximo a 1, la red se asemeja a una red Erdös-Rényi.</li>
+<li>La distribución de grado cuando <span class="math inline">\(p\)</span> es próximo a 0 se asemeja a una función Delta de Dirac. Cuando <span class="math inline">\(p\)</span> es próximo a 1, la distribución la podemos relacionar a una distribución de Poisson.</li>
+<li>El coeficiente de clustering es alto para valores de <span class="math inline">\(p\)</span> próximos a 0. No obstante, el valor de clustering tiende a ser bajo a medida que <span class="math inline">\(p\)</span> aumenta.</li>
+</ul>
+</div>
+<div id="implementación-del-modelo-watts-strogatz-en-r" class="section level2">
+<h2>Implementación del modelo Watts-Strogatz en R</h2>
+<p>Al igual que los modelos anteriores, este modelo también se puede generar en R. A continuación se muestra un ejemplo:</p>
+<pre class="r"><code># Dependencias
+require(igraph)
+require(ggraph)
+
+# Creción del grafo 
+set.seed(42)
+watts &lt;- sample_smallworld(1, 50, 1, 0.15)
+
+ggraph(watts, layout = &#39;circle&#39;) + 
+  geom_node_point(size = 2.5) + 
+  geom_edge_fan(aes(alpha = ..index..), show.legend = FALSE) + 
+  theme_graph()</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-3"></span>
+<img src="/post/grafos_aleatorios_files/figure-html/unnamed-chunk-3-1.png" alt="Grafo basado el modelo Watts-Strogatz con 50 vértices con probabilidad p = 0,15" width="672" />
+<p class="caption">
+Figura 3: Grafo basado el modelo Watts-Strogatz con 50 vértices con probabilidad p = 0,15
+</p>
+</div>
+</div>

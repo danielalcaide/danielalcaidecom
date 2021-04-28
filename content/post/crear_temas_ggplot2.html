@@ -1,0 +1,119 @@
+---
+title: "Crear temas en ggplot2"
+author: "Daniel Alcaide"
+date: '2020-01-23'
+tags: ["r", "ggplot2"]
+categories: ["tutoriales"]
+url: /crear_temas_ggplot2
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>El paquete <code>ggplot2</code> se ha convertido en una herramienta fundamental para muchos usuarios de R. En este post trato explicar como crear temas personalizados para los gráficos, permitiendonos así ahorra tiempo y lineas de código.</p>
+<!--more-->
+<p>Cuando estoy trabajando en un gráfico con R (y por supuesto con <code>ggplot2</code>) que voy a mostrar a otra personas siempre pierdo algo de tiempo modificando algunos de los parámetros del la función <code>theme()</code>, por ejemplo, quitando el color del fondo, ocultando los marcadores en los ejes o cambiando de posición la leyenda. Si tengo que crear varios gráficos acabo copiando y pegando la misma configuración de la función <code>theme</code> lo que provoca que el código sea más largo. En este post voy a explorar las posibilidades para darle otro estilo a nuestros gráficos, ya sea creando nosotros los temas o utilizando otros temas disponibles.</p>
+<div id="creacción-de-una-función-personalizada" class="section level2">
+<h2>Creacción de una función personalizada</h2>
+<p>Descubrí otro <a href="http://joeystanley.com/blog/custom-themes-in-ggplot2">post</a> donde hablaban de crear sus propios temas personalizados lo cual me pareció muy interesante. Hasta entonces, era consciente de que habían varios temas implementados en el paquete <code>ggplot2</code> como el <code>theme_bw</code> que es muy útil cuando quieres un fromato sin el fondo gris como el que viene por defecto. Pero no sabía que los temas eran en esencia modificaciones del tema por defecto, en este caso <code>theme_grey</code>.</p>
+<pre class="r"><code>theme_bw
+## function (base_size = 11, base_family = &quot;&quot;, base_line_size = base_size/22, 
+##     base_rect_size = base_size/22) 
+## {
+##     theme_grey(base_size = base_size, base_family = base_family, 
+##         base_line_size = base_line_size, base_rect_size = base_rect_size) %+replace% 
+##         theme(panel.background = element_rect(fill = &quot;white&quot;, 
+##             colour = NA), panel.border = element_rect(fill = NA, 
+##             colour = &quot;grey20&quot;), panel.grid = element_line(colour = &quot;grey92&quot;), 
+##             panel.grid.minor = element_line(size = rel(0.5)), 
+##             strip.background = element_rect(fill = &quot;grey85&quot;, 
+##                 colour = &quot;grey20&quot;), legend.key = element_rect(fill = &quot;white&quot;, 
+##                 colour = NA), complete = TRUE)
+## }
+## &lt;bytecode: 0x000000001a3df4f8&gt;
+## &lt;environment: namespace:ggplot2&gt;</code></pre>
+<p>Utilizando la definición de la función anterior como base, podemos definir nuestro <code>theme_custom</code>. Comenzamos con el tema <code>theme_classic</code> como base, pero vamos a definir un tamaño de letra y una fuente específica. Tal y como esta definido, el tema ya funcionaría aunque la personalización es muy limitada.</p>
+<pre class="r"><code>theme_custom &lt;- function () { 
+  theme_classic(base_size = 10, base_family = &quot;Bahnschrift&quot;)
+}</code></pre>
+<p>Para modificar el resto de parámetros en el tema, debemos incluir el comando <code>%+replace%</code> junto con la función <code>theme</code>. Ya dentro de esta última función utilizamos los parametros habituales p. ej. <code>panel.background</code>, <code>legend.key</code>, <code>panel.grid.major</code>, etc.</p>
+<pre class="r"><code>theme_custom &lt;- function () { 
+  theme_classic(base_size = 10, base_family = &quot;Bahnschrift&quot;)  %+replace% 
+  theme(
+      panel.background  = element_blank(),
+      plot.background = element_rect(fill=&quot;#F8F8F8&quot;, colour=NA), 
+      legend.background = element_rect(fill=&quot;transparent&quot;, colour=NA),
+      legend.key = element_rect(fill=&quot;transparent&quot;, colour=NA),
+      legend.position=&quot;bottom&quot;
+  )
+}</code></pre>
+<div id="resultado" class="section level3">
+<h3>Resultado</h3>
+<p>Un vez tenemos nuestro tema podemos comenzar a aplicarlo. En la Figura <a href="#fig:por-defecto">1</a> vemos el resultado del gráfico con el tema por defecto y el la Figura <a href="#fig:mi-tema">2</a> el resultado con el <code>theme_custom</code>.</p>
+<pre class="r"><code>data(mtcars) 
+
+consumo_potencia &lt;- mtcars %&gt;% 
+  ggplot(aes(mpg, hp, color = cyl)) + 
+  geom_point(size = 3) + 
+  labs(title = &quot;Consumo (millas/galón) por la potencia del vehículo&quot;, 
+       x = &quot;Caballos de potencia&quot;, 
+       y = &quot;Consumo (millas/galón)&quot;, 
+       color = &quot;Num. cilindros&quot;)
+
+consumo_potencia</code></pre>
+<div class="figure"><span id="fig:por-defecto"></span>
+<img src="/post/crear_temas_ggplot2_files/figure-html/por-defecto-1.png" alt="Diagrama de dispersión con el tema por defecto" width="672" />
+<p class="caption">
+Figura 1: Diagrama de dispersión con el tema por defecto
+</p>
+</div>
+<pre class="r"><code>consumo_potencia + theme_custom()</code></pre>
+<div class="figure"><span id="fig:mi-tema"></span>
+<img src="/post/crear_temas_ggplot2_files/figure-html/mi-tema-1.png" alt="Diagrama de dispersión con el tema personalizado" width="672" />
+<p class="caption">
+Figura 2: Diagrama de dispersión con el tema personalizado
+</p>
+</div>
+</div>
+</div>
+<div id="utilizar-otros-temas-en-ggplot2" class="section level2">
+<h2>Utilizar otros temas en ggplot2</h2>
+<p>Si no queremos estar definiendo nosotros mismos los temas. También podemos recurrir al paquete <a href="https://github.com/cttobin/ggthemr"><code>ggthemr</code></a> o al paquete <a href="https://hrbrmstr.github.io/hrbrthemes"><code>hrbrthemes</code></a> que nos permite aplicar otros temas creados por el desarrollador.</p>
+<div id="el-paquete-hrbrthemes" class="section level3">
+<h3>El paquete hrbrthemes</h3>
+<p>Este paquete creado/mantenido por (Bob Rudis)[<a href="https://rud.is/" class="uri">https://rud.is/</a>] nos proporciona una serie de funciones para darle un estilo diferente a nuestros gráficos en <code>ggplot2</code>. Aquí dejo un ejemplo del resultado.</p>
+<pre class="r"><code># Para instalar el paquete desde GitHub
+# devtools::install_github(&quot;hrbrmstr/hrbrthemes&quot;)
+
+consumo_potencia + 
+  hrbrthemes::theme_ipsum()</code></pre>
+<div class="figure"><span id="fig:grafico-hrbrthemes"></span>
+<img src="/post/crear_temas_ggplot2_files/figure-html/grafico-hrbrthemes-1.png" alt="Diagrama de dispersión utilizando el tema camoflauge del paquete hrbrthemes" width="672" />
+<p class="caption">
+Figura 3: Diagrama de dispersión utilizando el tema camoflauge del paquete hrbrthemes
+</p>
+</div>
+</div>
+<div id="el-paquete-ggthemr" class="section level3">
+<h3>El paquete ggthemr</h3>
+<p>La peculiaridad de este paquete es que no se utilizan como los otros temas sino que se aplican estilos por defecto. Para activarlos, debemos ejecutarlos antes del código de nuestro gráfico. A continuación os dejo un ejemplo:</p>
+<pre class="r"><code># 1. Primero debemos definir que tema queremos.
+# Puedes ver todos los temas disponibles en el repositorio del paquete: https://github.com/cttobin/ggthemr
+ggthemr::ggthemr(&#39;camouflage&#39;)
+
+# 2. Y a continuación ejecutar el gráfico.
+consumo_potencia</code></pre>
+<div class="figure"><span id="fig:grafico-ggthemr"></span>
+<img src="/post/crear_temas_ggplot2_files/figure-html/grafico-ggthemr-1.png" alt="Diagrama de dispersión utilizando el tema camouflage del paquete ggthemr" width="672" />
+<p class="caption">
+Figura 4: Diagrama de dispersión utilizando el tema camouflage del paquete ggthemr
+</p>
+</div>
+<p>Para resetear el tema y volver al original debemos utilizar el comando <code>ggthemr_reset()</code>.</p>
+<p>Recientemente ha aparecido otro paquete</p>
+</div>
+</div>
+<div id="conclusión" class="section level2">
+<h2>Conclusión</h2>
+<p>Para darle un estilo más personal a nuestro gráficos podemos utilizar temas predefinidos en paquetes como los de <code>hrbrthemes</code>, <code>ggthemr</code> o crear nosotros mismos los temas como si fueran funciones.</p>
+</div>
