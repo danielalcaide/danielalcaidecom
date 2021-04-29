@@ -5,6 +5,8 @@ date: '2021-04-28'
 tags: ["power bi"]
 categories: ["tutoriales"]
 url: /introduccion_powerbi
+showToc: true
+TocOpen: true
 ---
 
 > Este tutorial esta creado a partir de mis notas del curso de *Introduction to Power BI de DataCamp* 
@@ -82,3 +84,33 @@ Ten en cuenta que Power BI en los variables numéricas muestra la suma pero no s
 
 ![Modificar valor agregado Power BI](/post/introduccion_power_bi/modificar_valor_agregado_power_bi.png)
 
+## Dando formato a los informes de Power BI
+
+El formato de nuestras visualizaciones es importante para facilitar la interpretación de quien las utiliza. En los siguientes apartados se muestran soluciones de problemas que nos podemos encontrar creando nuestro informes. 
+
+### Ordenar variables 
+
+Es común tener información agregada a nivel mensual. Por defecto, Power BI no va entender que la palabra *Enero*, *Febrero*, *Marzo*, etc. corresponde a los mese y por tanto solamente vamos a poder ordenar estos datos alfabéticamente, (tanto de manera ascendente o descendente). Por ejemplo, os muestro el siguiente caso:  
+
+![Eje desordenado Power BI](/post/introduccion_power_bi/eje_desordenado_power_bi.png)
+
+Para solucionar este problema tenemos que indicarle a Power BI el orden de estos datos. Para ello nos tenemos que ir la vista de datos, clicar sobre el botón **Ordenar por columna** y seleccionar la columna que nos indique el order. En este caso la columna que determina el orden es la la variable numérica del mes.
+
+![Ordenar variables Power BI](/post/introduccion_power_bi/ordenar_variables_power_bi.gif)
+
+Si volvemos a la vista de informe veremos que los meses ahora están ordenados de manera adecuada.
+
+![Eje ordenado Power BI](/post/introduccion_power_bi/eje_ordenado_power_bi.png)
+
+### Desglosar y profundizar en los datos
+
+A veces puede ser útil revelar detalles adicionales al profundizar en nivel menos agregado de los datos. Desglosar permite que un solo objeto visual muestre datos en un nivel alto y luego le da al usuario la opción de ver los datos en un nivel más detallado. Esta acción es posible mediante la creación de jerarquías. Un ejemplo de jerarquía podría ser Año > Trimestre > Mes > Día 
+
+Una vez que se crea una jerarquía, puede navegar hacia arriba y hacia abajo a niveles inferiores. Hay maneras diferentes de hacer esto. Power BI tiene un conjunto de controles de exploración que le permiten ver los datos de diferentes formas. En el siguiente ejemplo, usamos un gráfico de columnas que tiene una jerarquía formada por año, trimestre y mes. 
+
+<img src="/post/introduccion_power_bi/diagrama_barras_agregado_power_bi.png" alt="Diagrama barras agregado Power BI" style="zoom:50%;" />
+
+Al seleccionar el icono de flechas dobles, se profundiza en todos los campos a la vez. Te lleva al siguiente nivel en la jerarquía. Si está mirando el nivel del año,
+puede desglosar hasta el nivel de un trimestre para todos los años, y luego a nivel mensual para todos los años. Ten en cuenta que las cantidades que ve aquí son las cantidades de ventas por mes para todos los años. Entonces, el monto de enero es el total de enero de 2017, 2018 y 2019, sumados.
+
+<img src="/post/introduccion_power_bi/diagrama_barras_agregado2_power_bi.png" alt="Diagrama barras agregado por trimestre Power BI" style="zoom:50%;" />

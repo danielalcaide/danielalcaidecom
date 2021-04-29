@@ -6,6 +6,11 @@ theme: "hugo-PaperMod"
 defaultContentLanguage: es
 languageCode: es
 
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
 enableRobotsTXT: true
 
 minify:

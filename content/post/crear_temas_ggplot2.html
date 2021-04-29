@@ -30,7 +30,7 @@ url: /crear_temas_ggplot2
 ##                 colour = &quot;grey20&quot;), legend.key = element_rect(fill = &quot;white&quot;, 
 ##                 colour = NA), complete = TRUE)
 ## }
-## &lt;bytecode: 0x000000001a3df4f8&gt;
+## &lt;bytecode: 0x00000000127b2910&gt;
 ## &lt;environment: namespace:ggplot2&gt;</code></pre>
 <p>Utilizando la definición de la función anterior como base, podemos definir nuestro <code>theme_custom</code>. Comenzamos con el tema <code>theme_classic</code> como base, pero vamos a definir un tamaño de letra y una fuente específica. Tal y como esta definido, el tema ya funcionaría aunque la personalización es muy limitada.</p>
 <pre class="r"><code>theme_custom &lt;- function () { 
@@ -81,7 +81,7 @@ Figura 2: Diagrama de dispersión con el tema personalizado
 <p>Si no queremos estar definiendo nosotros mismos los temas. También podemos recurrir al paquete <a href="https://github.com/cttobin/ggthemr"><code>ggthemr</code></a> o al paquete <a href="https://hrbrmstr.github.io/hrbrthemes"><code>hrbrthemes</code></a> que nos permite aplicar otros temas creados por el desarrollador.</p>
 <div id="el-paquete-hrbrthemes" class="section level3">
 <h3>El paquete hrbrthemes</h3>
-<p>Este paquete creado/mantenido por (Bob Rudis)[<a href="https://rud.is/" class="uri">https://rud.is/</a>] nos proporciona una serie de funciones para darle un estilo diferente a nuestros gráficos en <code>ggplot2</code>. Aquí dejo un ejemplo del resultado.</p>
+<p>Este paquete creado/mantenido por <a href="https://rud.is/">Bob Rudis</a> nos proporciona una serie de funciones para darle un estilo diferente a nuestros gráficos en <code>ggplot2</code>. Aquí dejo un ejemplo del resultado.</p>
 <pre class="r"><code># Para instalar el paquete desde GitHub
 # devtools::install_github(&quot;hrbrmstr/hrbrthemes&quot;)
 

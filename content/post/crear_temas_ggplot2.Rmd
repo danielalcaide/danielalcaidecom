@@ -84,7 +84,7 @@ Si no queremos estar definiendo nosotros mismos los temas. También podemos recu
 
 ### El paquete hrbrthemes
 
-Este paquete creado/mantenido por (Bob Rudis)[https://rud.is/] nos proporciona una serie de funciones para darle un estilo diferente a nuestros gráficos en `ggplot2`. Aquí dejo un ejemplo del resultado.
+Este paquete creado/mantenido por [Bob Rudis](https://rud.is/) nos proporciona una serie de funciones para darle un estilo diferente a nuestros gráficos en `ggplot2`. Aquí dejo un ejemplo del resultado.
 
 ```{r grafico-hrbrthemes, fig.cap="Diagrama de dispersión utilizando el tema camoflauge del paquete hrbrthemes"}
 # Para instalar el paquete desde GitHub

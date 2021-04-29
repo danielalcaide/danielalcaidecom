@@ -1,0 +1,2 @@
+# Redirect default Netlify subdomain to primary domain
+https://danielalcaide.netlify.app/* https://danielalcaide.com/:splat 301!
