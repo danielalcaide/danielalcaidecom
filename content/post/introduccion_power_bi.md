@@ -114,3 +114,43 @@ Al seleccionar el icono de flechas dobles, se profundiza en todos los campos a l
 puede desglosar hasta el nivel de un trimestre para todos los años, y luego a nivel mensual para todos los años. Ten en cuenta que las cantidades que ve aquí son las cantidades de ventas por mes para todos los años. Entonces, el monto de enero es el total de enero de 2017, 2018 y 2019, sumados.
 
 <img src="/post/introduccion_power_bi/diagrama_barras_agregado2_power_bi.png" alt="Diagrama barras agregado por trimestre Power BI" style="zoom:50%;" />
+
+## El lenguaje DAX para Power BI
+
+DAX es el lenguaje de cálculo utilizado en Power BI. Proporciona la capacidad de crear columnas, tablas y medidas generadas mediante programación. Si alguna vez ha utilizado fórmulas y funciones de Excel, el lenguaje DAX está inspirado en el mismo concepto. Por ejemplo, la función `SUM` es la misma en Excel que en DAX.
+
+En definitiva, podemos decir que el lenguaje DAX consta de muchas funciones. Las funciones son fórmulas predefinidas que realizan cálculos sobre valores específicos, llamados argumentos, en un orden particular. Cada función tiene una sintaxis específica que indica el orden esperado de los argumentos. Podemos encontrar todas las funciones disponibles para nosotros y su sintaxis en la [documentación de Microsoft](https://docs.microsoft.com/es-es/dax/dax-function-reference).
+
+### Tipos de cálculos
+
+En el menú superior, puede encontrar las opciones para crear un par de tipos diferentes de cálculos:
+
+![DAX Power BI](/post/introduccion_power_bi/dax_power_bi.png)
+
+- **Nuevas columnas:** Las columnas se pueden basar en otras columnas de cualquier tabla. Cualquier columna creada se calcula en la carga de datos o cuando se actualizan los datos. Por ejemplo, crearemos una nueva columna llamada `LoginID` extrayendo los dos primeros caracteres de una cadena de texto almacenado en la columna `FirstName`de la tabla `DimCustomer` y lo concatenaremos con el campo `LastName`de la misma tabla. Para ello, en la vista de datos podemos definir: `LoginID = LEFT(DimCustomer[FirstName], 2) & DimCustomer[LastName]`. 
+
+- **Nuevas tablas**: Lo mismo ocurre con las tablas. Podemos crear una tabla en blanco o una copia de una tabla existente.
+
+- **Nuevas medidas (nuevas medias o medidas rápidas)**: Las medidas son un poco diferentes. Nos permiten definir cálculos complejos que se utilizarán en sus datos. Se calculan a medida que interactúa y filtra en su informe. Por ejemplo, si filtramos por un año específico, nuestras medidas se basarán solo en ese año. A diferencia de las tablas y columnas calculadas, las medidas se calculan durante el tiempo de consulta en lugar de cuando se cargan los datos. Esto lo hace más eficiente porque el cálculo no se ejecuta cada vez que se accede a su tabla. En cambio, se calcula cuando se usa la medida. 
+
+  Un medida que solemos utilizar a menudo es contar el numero de filas que tiene una tabla. Power BI tiene implementada la función `COUNT`. Este cálculo no lo podríamos hacer una una *Nueva columna* ya que necesitamos tener acceso a toda la tabla. El código  `Transaction Count = COUNT(FactInternalSales[SalesID])` proporciona el conteo de la columna `SalesID` en la tabla `FactInternalSales` donde cada fila representa una venta. 
+
+Las medias y las columnas pueden llevar algo de confusión. En la siguiente tabla intento presentar las diferencias entre las dos: 
+
+| Columnas                                          | Medias                                                       |
+| ------------------------------------------------- | ------------------------------------------------------------ |
+| Evalúa cada fila                                  | Agrega múltiples filas                                       |
+| Agrega una nueva columna a una tabla existente    | Devuelve otro campo que se puede agregar a una visualización |
+| Ejemplo: `Beneficio = Ventas - Coste - Impuestos` | Ejemplo: `Ventas medias = media de la columna ventas`        |
+
+### Medidas y medidas rápidas
+
+Una de las funciones de DAX más utilizadas es la función Calcular, que le permite combinar la agregación y el filtrado. Su estructura es la siguiente: `CALCULATE (Aggregation, filter, [filter]...)`. Para que la agregación se puede usar una función `SUM()`, `COUNT()`, `AVERAGE()`, etc. También, se necesitan uno o más filtros, por ejemplo, `ProductColor = RED` o `SalesLocation = "New York"`. 
+
+Si queremos una medida calculada para la cantidad de ventas generada por la oficina de Nueva York. Podríamos usar la agregación de la suma para sumar todas las ventas y filtrarlas por ubicación de ventas de tal manera que `NYC Sales  = Calculate(SUM[Sales], SalesLocation = "New York")`
+
+Otro aspecto importante que debe conocer al crear medidas es la herramienta **medidas rápidas**. Las medidas rápidas son útiles porque le permiten crear medidas complejas sin escribir ningún DAX. Lo único que necesitas para crearlas es arrastrar y soltar los campos necesarios. 
+
+## Conclusión
+
+En este breve tutorial hemos visto las diferentes vistas en Power BI, la creación de un modelo de datos para establecer relaciones entre sus tablas en la vista modelo y mostramos como crear un primer informe interactivo en la vista Informe. También hemos visto como se puede dar formato a las visualizaciones  para hacer más interpretables nuestras visualizaciones. Por último, hemos presentado el lenguaje de fórmulas de Microsoft, DAX y cómo usar los diferentes tipos de cálculos disponibles.  

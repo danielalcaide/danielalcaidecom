@@ -31,8 +31,17 @@ params:
     ShowShareButtons: true
     ShowPostNavLinks: false
     ShowBreadCrumbs: false
-    
+
     # home-info mode
     homeInfoParams:
       Title: "\U0001F44B Hola, soy Daniel Alcaide"
       Content: Este es mi sitio web personal donde escribo sobre ciencia de datos.
+      
+    socialIcons:
+      - name: "github"
+        url: "https://github.com/danielalcaide"
+      - name: "linkedin"
+        url: "https://www.linkedin.com/in/daniel-alcaide/"
+      - name: "twitter"
+        url: "https://twitter.com/danielalcaide_"
+        
