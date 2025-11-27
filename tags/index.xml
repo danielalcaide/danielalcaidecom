@@ -6,20 +6,34 @@
     <description>Recent content in Tags on Daniel Alcaide</description>
     <generator>Hugo -- 0.151.0</generator>
     <language>es</language>
-    <lastBuildDate>Tue, 14 Dec 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://danielalcaide.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Estadística</title>
-      <link>https://danielalcaide.com/tags/estad%C3%ADstica/</link>
-      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
-      <guid>https://danielalcaide.com/tags/estad%C3%ADstica/</guid>
+      <title>Databricks</title>
+      <link>https://danielalcaide.com/tags/databricks/</link>
+      <pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>https://danielalcaide.com/tags/databricks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Finanzas</title>
+      <link>https://danielalcaide.com/tags/finanzas/</link>
+      <pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>https://danielalcaide.com/tags/finanzas/</guid>
       <description></description>
     </item>
     <item>
       <title>Python</title>
       <link>https://danielalcaide.com/tags/python/</link>
-      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate>
       <guid>https://danielalcaide.com/tags/python/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Estadística</title>
+      <link>https://danielalcaide.com/tags/estad%C3%ADstica/</link>
+      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
+      <guid>https://danielalcaide.com/tags/estad%C3%ADstica/</guid>
       <description></description>
     </item>
     <item>

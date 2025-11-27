@@ -2,25 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://danielalcaide.com/social-trading-risk-analytics/</loc>
+    <lastmod>2025-11-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://danielalcaide.com/categories/</loc>
-    <lastmod>2021-12-14T00:00:00+00:00</lastmod>
+    <lastmod>2025-11-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://danielalcaide.com/</loc>
-    <lastmod>2021-12-14T00:00:00+00:00</lastmod>
+    <lastmod>2025-11-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danielalcaide.com/tags/databricks/</loc>
+    <lastmod>2025-11-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danielalcaide.com/tags/finanzas/</loc>
+    <lastmod>2025-11-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danielalcaide.com/post/</loc>
+    <lastmod>2025-11-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danielalcaide.com/categories/proyectos/</loc>
+    <lastmod>2025-11-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danielalcaide.com/tags/python/</loc>
+    <lastmod>2025-11-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danielalcaide.com/tags/</loc>
+    <lastmod>2025-11-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://danielalcaide.com/tags/estad%C3%ADstica/</loc>
     <lastmod>2021-12-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://danielalcaide.com/estandarizacion_de_datos/</loc>
-    <lastmod>2021-12-14T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://danielalcaide.com/post/</loc>
-    <lastmod>2021-12-14T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://danielalcaide.com/tags/python/</loc>
-    <lastmod>2021-12-14T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://danielalcaide.com/tags/</loc>
     <lastmod>2021-12-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://danielalcaide.com/categories/tutoriales/</loc>
