@@ -16,6 +16,7 @@ markup:
       unsafe: true
 
 enableRobotsTXT: true
+enableEmoji: true
 
 minify:
     disableXML: true
@@ -58,6 +59,3 @@ params:
         url: "https://github.com/danielalcaide"
       - name: "linkedin"
         url: "https://www.linkedin.com/in/daniel-alcaide/"
-      - name: "twitter"
-        url: "https://twitter.com/danielalcaide_"
-        
