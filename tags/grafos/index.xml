@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Grafos on Daniel Alcaide</title>
+    <link>https://danielalcaide.com/tags/grafos/</link>
+    <description>Recent content in Grafos on Daniel Alcaide</description>
+    <generator>Hugo -- 0.151.0</generator>
+    <language>es</language>
+    <lastBuildDate>Mon, 20 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://danielalcaide.com/tags/grafos/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Grafos aleatorios</title>
+      <link>https://danielalcaide.com/grafos_aleatorios/</link>
+      <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://danielalcaide.com/grafos_aleatorios/</guid>
+      <description>&lt;script src=&#34;https://danielalcaide.com/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;En el análisis de redes (o grafos) se necesitan instrumentos para estudiar las propiedades de los grafos encontrados en el mundo real. Para ello, necesitamos definir grafos realistas para evaluar aspectos claves de los grafos como el diámetro, el coeficiente de agrupación o la distribución de grado. Los grafos creados para tal propósito son grafos aleatorios, construidos a partir de un modelo.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
