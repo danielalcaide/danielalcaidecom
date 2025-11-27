@@ -1,8 +1,12 @@
 
 baseURL: https://danielalcaide.com
 title: Daniel Alcaide
-paginate: 5
-theme: "hugo-PaperMod"
+
+pagination:
+  disableAliases: false
+  pagerSize: 5
+
+theme: "PaperMod"
 defaultContentLanguage: es
 languageCode: es
 
@@ -12,6 +16,7 @@ markup:
       unsafe: true
 
 enableRobotsTXT: true
+enableEmoji: true
 
 minify:
     disableXML: true
@@ -22,9 +27,10 @@ languages:
     languageName: "Español"
     weight: 1
     # home-info mode
-    homeInfoParams:
-      Title: "\U0001F44B Hola, soy Daniel Alcaide"
-      Content: Este es mi sitio web personal donde escribo sobre ciencia de datos.
+    params:
+      homeInfoParams:
+        Title: "\U0001F44B Hola, soy Daniel Alcaide"
+        Content: Este es mi sitio web personal donde escribo sobre ciencia de datos.
 
   # en:
   #   languageName: "English"
@@ -53,6 +59,3 @@ params:
         url: "https://github.com/danielalcaide"
       - name: "linkedin"
         url: "https://www.linkedin.com/in/daniel-alcaide/"
-      - name: "twitter"
-        url: "https://twitter.com/danielalcaide_"
-        
