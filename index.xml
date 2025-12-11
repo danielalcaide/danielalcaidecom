@@ -5,80 +5,15 @@
     <link>https://danielalcaide.com/</link>
     <description>Recent content on Daniel Alcaide</description>
     <generator>Hugo -- 0.151.0</generator>
-    <language>es</language>
-    <lastBuildDate>Thu, 27 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <language>en</language>
+    <lastBuildDate>Thu, 11 Dec 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://danielalcaide.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Análisis de riesgo en Social Trading con arquitectura Lakehouse</title>
+      <title>From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python</title>
       <link>https://danielalcaide.com/social-trading-risk-analytics/</link>
-      <pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 11 Dec 2025 00:00:00 +0000</pubDate>
       <guid>https://danielalcaide.com/social-trading-risk-analytics/</guid>
-      <description>&lt;p&gt;En las plataformas de &lt;em&gt;social trading&lt;/em&gt; como eToro, los inversores pueden copiar las estrategias de traders experimentados. Sin embargo, la mayoría de usuarios se fijan únicamente en la rentabilidad, ignorando el riesgo asociado. Este proyecto aborda precisamente ese problema.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Estandarización de datos</title>
-      <link>https://danielalcaide.com/estandarizacion_de_datos/</link>
-      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
-      <guid>https://danielalcaide.com/estandarizacion_de_datos/</guid>
-      <description>&lt;p&gt;La &lt;strong&gt;estandarización&lt;/strong&gt; de los datos es un paso común en el preprocesamiento. Ésta se puede definir como la acción de cambiar los datos para que estén centrados en el 0 y tengan una desviación estándar de 1. El objetivo es llevar las variables con diferentes unidades a una común. Muchas tareas de aprendizaje automático son sensibles a las magnitudes de los datos y se supone que la estandarización elimina esos factores. Por ejemplo, el método de &lt;em&gt;k-nearest neighbors&lt;/em&gt; es sensible a las magnitudes de las variables, por lo que se deben estandarizar los datos. En cambio, los métodos basados en árboles (&lt;em&gt;tree-based methods&lt;/em&gt;) no son sensibles a los diferentes rangos de las variables, por lo que la estandarización no es necesaria.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Definir funciones en Python</title>
-      <link>https://danielalcaide.com/definir_funciones_python/</link>
-      <pubDate>Thu, 05 Aug 2021 00:00:00 +0000</pubDate>
-      <guid>https://danielalcaide.com/definir_funciones_python/</guid>
-      <description>&lt;p&gt;En este tutorial explicaremos cómo escribir diferentes tipos funciones personalizadas: funciones sin parámetros, funciones con parámetros únicos o  múltiples y funciones que devuelven un único o múltiples valores.&lt;/p&gt;
-&lt;h2 id=&#34;definición-de-una-función&#34;&gt;Definición de una función&lt;/h2&gt;
-&lt;p&gt;Las funciones que incorpora Python como la función &lt;code&gt;str&lt;/code&gt; acepta un objeto como un número y devuelve un objeto de cadena. Si bien las funciones integradas son de mucha ayuda en nuestro trabajo diario,  a menudo, necesitaremos funciones que tengan una funcionalidad específica.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Introducción a Python</title>
-      <link>https://danielalcaide.com/introduccion_python/</link>
-      <pubDate>Mon, 05 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://danielalcaide.com/introduccion_python/</guid>
-      <description>&lt;h2 id=&#34;qué-es-python&#34;&gt;¿Qué es Python?&lt;/h2&gt;
-&lt;p&gt;Es un lenguaje de programación muy versátil que permite desarrollar casi cualquier tipo &lt;em&gt;software&lt;/em&gt; y que puede ser ejecutado en casi cualquier dispositivo. Una de sus mayores fortalezas es su gran comunidad que ha ayudado a extender las posibilidades de este lenguaje creando paquetes de funciones que facilitan muchísimo el desarrollo de nuevo programas. Como no podría ser de otra manera, también encontramos un inmensa cantidad de paquetes específicos para ciencia de datos.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Introducción a Power BI</title>
-      <link>https://danielalcaide.com/introduccion_powerbi/</link>
-      <pubDate>Wed, 28 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>https://danielalcaide.com/introduccion_powerbi/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;Este tutorial esta creado a partir de mis notas del curso de &lt;em&gt;Introduction to Power BI de DataCamp&lt;/em&gt;&lt;/p&gt;&lt;/blockquote&gt;
-&lt;h2 id=&#34;qué-es-power-bi&#34;&gt;¿Qué es Power BI?&lt;/h2&gt;
-&lt;p&gt;Power BI es una herramienta que le permite crear informes interactivos con los que explorar datos de para obtener información.&lt;/p&gt;
-&lt;p&gt;Power BI tiene dos versiones,  la versión de escritorio (&lt;a href=&#34;https://powerbi.microsoft.com/en-us/desktop/&#34;&gt;Power BI Desktop&lt;/a&gt;) y  la versión en la nube (&lt;a href=&#34;https://app.powerbi.com/&#34;&gt;Power BI Online&lt;/a&gt;). Power BI Desktop es una herramienta de creación de informes y análisis de datos disponible en tu equipo local. Es la mejor manera de crear informes ya que es la versión que más funcionalidades incluye como el como el Query Editor. Por otro lado, Power BI Online también nos permite crear informes pero de una manera más limitada. Por lo general, los informes se crean en local y luego se publican en el versión online para que puede ser accedido por otros usuarios o compañeros.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Crear temas en ggplot2</title>
-      <link>https://danielalcaide.com/crear_temas_ggplot2/</link>
-      <pubDate>Thu, 23 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>https://danielalcaide.com/crear_temas_ggplot2/</guid>
-      <description>&lt;script src=&#34;https://danielalcaide.com/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
-
-
-&lt;p&gt;El paquete &lt;code&gt;ggplot2&lt;/code&gt; se ha convertido en una herramienta fundamental para muchos usuarios de R. En este post trato explicar como crear temas personalizados para los gráficos, permitiendonos así ahorra tiempo y lineas de código.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Detección de comunidades en redes</title>
-      <link>https://danielalcaide.com/deteccion-comunidades-redes/</link>
-      <pubDate>Tue, 21 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>https://danielalcaide.com/deteccion-comunidades-redes/</guid>
-      <description>&lt;script src=&#34;https://danielalcaide.com/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
-
-
-&lt;p&gt;La aristas de una red se pueden clasificar en uniones débiles y fuertes. Los vínculos débiles son aquellas conexiones que al eliminarlas la distancia mínima entre los nodos aumenta. Esta distancia calculada a partir de el camino mínimo entre los vértices se conoce como &lt;em&gt;span&lt;/em&gt;. Por contra, un vínculo fuerte es aquel que aunque se elimine la arista que conectan dos vértices la distancia entre ambos prácticamente no cambia.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Grafos aleatorios</title>
-      <link>https://danielalcaide.com/grafos_aleatorios/</link>
-      <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>https://danielalcaide.com/grafos_aleatorios/</guid>
-      <description>&lt;script src=&#34;https://danielalcaide.com/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
-
-
-&lt;p&gt;En el análisis de redes (o grafos) se necesitan instrumentos para estudiar las propiedades de los grafos encontrados en el mundo real. Para ello, necesitamos definir grafos realistas para evaluar aspectos claves de los grafos como el diámetro, el coeficiente de agrupación o la distribución de grado. Los grafos creados para tal propósito son grafos aleatorios, construidos a partir de un modelo.&lt;/p&gt;</description>
+      <description>&lt;p&gt;On social trading platforms like eToro, investors can copy the strategies of experienced traders. However, most users focus solely on profitability, ignoring the associated risk. This project addresses precisely that problem.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

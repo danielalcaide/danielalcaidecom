@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="es" dir="auto" data-theme="auto">
+<html lang="en" dir="auto" data-theme="auto">
 
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Análisis de riesgo en Social Trading con arquitectura Lakehouse | Daniel Alcaide</title>
-<meta name="keywords" content="python, databricks, finanzas">
-<meta name="description" content="En las plataformas de social trading como eToro, los inversores pueden copiar las estrategias de traders experimentados. Sin embargo, la mayoría de usuarios se fijan únicamente en la rentabilidad, ignorando el riesgo asociado. Este proyecto aborda precisamente ese problema.">
+<title>From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python | Daniel Alcaide</title>
+<meta name="keywords" content="python, databricks, finance">
+<meta name="description" content="On social trading platforms like eToro, investors can copy the strategies of experienced traders. However, most users focus solely on profitability, ignoring the associated risk. This project addresses precisely that problem.">
 <meta name="author" content="Daniel Alcaide">
 <link rel="canonical" href="https://danielalcaide.com/social-trading-risk-analytics/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.343cc480b9ffc8f04ccbe5e968ad674880cab773ec19905e93033065c1e7a804.css" integrity="sha256-NDzEgLn/yPBMy&#43;XpaK1nSIDKt3PsGZBekwMwZcHnqAQ=" rel="preload stylesheet" as="style">
@@ -18,7 +18,8 @@
 <link rel="mask-icon" href="https://danielalcaide.com/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="es" href="https://danielalcaide.com/social-trading-risk-analytics/">
+<link rel="alternate" hreflang="en" href="https://danielalcaide.com/social-trading-risk-analytics/">
+<link rel="alternate" hreflang="es" href="https://danielalcaide.com/es/social-trading-risk-analytics/">
 <noscript>
     <style>
         #theme-toggle,
@@ -72,19 +73,19 @@
 
 </script><meta property="og:url" content="https://danielalcaide.com/social-trading-risk-analytics/">
   <meta property="og:site_name" content="Daniel Alcaide">
-  <meta property="og:title" content="Análisis de riesgo en Social Trading con arquitectura Lakehouse">
-  <meta property="og:description" content="En las plataformas de social trading como eToro, los inversores pueden copiar las estrategias de traders experimentados. Sin embargo, la mayoría de usuarios se fijan únicamente en la rentabilidad, ignorando el riesgo asociado. Este proyecto aborda precisamente ese problema.">
-  <meta property="og:locale" content="es">
+  <meta property="og:title" content="From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python">
+  <meta property="og:description" content="On social trading platforms like eToro, investors can copy the strategies of experienced traders. However, most users focus solely on profitability, ignoring the associated risk. This project addresses precisely that problem.">
+  <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
-    <meta property="article:published_time" content="2025-11-27T00:00:00+00:00">
-    <meta property="article:modified_time" content="2025-11-27T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-12-11T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-12-11T00:00:00+00:00">
     <meta property="article:tag" content="Python">
     <meta property="article:tag" content="Databricks">
-    <meta property="article:tag" content="Finanzas">
+    <meta property="article:tag" content="Finance">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Análisis de riesgo en Social Trading con arquitectura Lakehouse">
-<meta name="twitter:description" content="En las plataformas de social trading como eToro, los inversores pueden copiar las estrategias de traders experimentados. Sin embargo, la mayoría de usuarios se fijan únicamente en la rentabilidad, ignorando el riesgo asociado. Este proyecto aborda precisamente ese problema.">
+<meta name="twitter:title" content="From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python">
+<meta name="twitter:description" content="On social trading platforms like eToro, investors can copy the strategies of experienced traders. However, most users focus solely on profitability, ignoring the associated risk. This project addresses precisely that problem.">
 
 
 <script type="application/ld+json">
@@ -101,7 +102,7 @@
     {
       "@type": "ListItem",
       "position":  2 ,
-      "name": "Análisis de riesgo en Social Trading con arquitectura Lakehouse",
+      "name": "From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python",
       "item": "https://danielalcaide.com/social-trading-risk-analytics/"
     }
   ]
@@ -111,17 +112,17 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Análisis de riesgo en Social Trading con arquitectura Lakehouse",
-  "name": "Análisis de riesgo en Social Trading con arquitectura Lakehouse",
-  "description": "En las plataformas de social trading como eToro, los inversores pueden copiar las estrategias de traders experimentados. Sin embargo, la mayoría de usuarios se fijan únicamente en la rentabilidad, ignorando el riesgo asociado. Este proyecto aborda precisamente ese problema.\n",
+  "headline": "From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python",
+  "name": "From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python",
+  "description": "On social trading platforms like eToro, investors can copy the strategies of experienced traders. However, most users focus solely on profitability, ignoring the associated risk. This project addresses precisely that problem.\n",
   "keywords": [
-    "python", "databricks", "finanzas"
+    "python", "databricks", "finance"
   ],
-  "articleBody": "En las plataformas de social trading como eToro, los inversores pueden copiar las estrategias de traders experimentados. Sin embargo, la mayoría de usuarios se fijan únicamente en la rentabilidad, ignorando el riesgo asociado. Este proyecto aborda precisamente ese problema.\nEl problema Las plataformas de social trading destacan a los traders con mayores retornos, pero altos rendimientos no siempre implican bajo riesgo. Dos traders con un 30% de rentabilidad anual pueden tener perfiles de riesgo completamente diferentes:\nTrader A: Ganancias consistentes, ratios Sharpe 2.0 y Sortino 2.5 Trader B: Año volátil, ratios Sharpe 0.5 y Sortino 0.4 La experiencia del inversor será radicalmente distinta: mientras que con el Trader A se mantiene la calma durante las fluctuaciones, con el Trader B existe el riesgo de vender en pánico ante una caída del 60%.\nLa solución He desarrollado una plataforma de análisis que proporciona:\nMétricas ajustadas por riesgo (Sharpe, Sortino, Calmar) para una evaluación completa Análisis de diversificación de carteras (sectores, bolsas, países) Identificación de traders de élite basada en criterios de rendimiento sostenible Insights basados en datos que sustituyen decisiones emocionales Arquitectura técnica El proyecto implementa una arquitectura Medallion (Bronze → Silver → Gold) en Databricks:\nBronze (Datos crudos):\nRespuestas HTML inmutables de perfiles de traders Patrón append-only que permite reprocesamiento completo Manejo de códigos de estado HTTP para debugging Silver (Datos curados):\nMétricas de riesgo parseadas y validadas Composición de carteras en formato normalizado Calidad de datos garantizada mediante validaciones Gold (Analítica):\nTraders de élite (Sortino \u003e 7 Y Calmar \u003e 7) Top performers por rentabilidad anualizada Datos listos para sistemas de recomendación Métricas financieras clave El análisis se centra en dos métricas principales:\nRatio de Sortino (métrica primaria)\nPenaliza solo la volatilidad a la baja (pérdidas) Ignora la volatilidad al alza (beneficiosa para inversores) Visión más realista del riesgo real Ratio de Calmar (métrica secundaria)\nRevela resiliencia ante el peor escenario posible Identifica traders que sobreviven a las caídas del mercado Muestra sostenibilidad psicológica Resultados El análisis de más de 1.000 traders reveló hallazgos interesantes:\nSolo el 15-20% de los traders con mayores retornos cumple los criterios de élite (Sortino \u003e 7, Calmar \u003e 7), lo que indica que la mayoría asume riesgos excesivos\nEl ratio Sortino es consistentemente 1.3-1.8x superior al Sharpe para traders de élite, demostrando retornos asimétricos (ganancias ocasionales grandes, pérdidas mínimas)\nLos traders con Calmar \u003c 0.3 tienen un 60% más de rotación, ya que las caídas profundas provocan ventas por pánico\nLos traders de élite presentan un beta promedio de 0.7, indicando estrategias market-neutral o posicionamiento defensivo\nStack tecnológico Databricks (DBR 13.x): Plataforma de analítica unificada Apache Spark (3.4+): Procesamiento distribuido de datos Delta Lake (2.0+): Almacenamiento confiable en data lake Python (3.9+): Lenguaje principal de desarrollo BeautifulSoup4: Parsing de HTML PySpark \u0026 Pandas: Análisis de datos Próximos pasos Las siguientes mejoras están planificadas:\nModelo ML para predecir degradación del rendimiento de traders Dashboard interactivo en Streamlit para comparación de traders API RESTful para acceso programático a rankings Sistema de alertas en tiempo real cuando métricas crucen umbrales Framework de backtesting para estrategias de copy trading El código completo está disponible en mi repositorio de GitHub.\n",
-  "wordCount" : "522",
-  "inLanguage": "es",
-  "datePublished": "2025-11-27T00:00:00Z",
-  "dateModified": "2025-11-27T00:00:00Z",
+  "articleBody": "On social trading platforms like eToro, investors can copy the strategies of experienced traders. However, most users focus solely on profitability, ignoring the associated risk. This project addresses precisely that problem.\nThe problem Social trading platforms highlight traders with the highest returns, but high returns don’t always mean low risk. To understand why, we need to talk about risk-adjusted metrics:\nSharpe Ratio: Measures the excess return obtained per unit of total volatility. A Sharpe of 2.0 means that for each point of risk assumed, 2 points of return are obtained. Values above 1.0 are considered good.\nSortino Ratio: Similar to Sharpe, but only penalizes downside volatility (losses), ignoring upward fluctuations. It’s more realistic for investors, since gains aren’t “risk”. A Sortino of 2.0+ is excellent.\nCalmar Ratio: Compares annualized return with maximum historical drawdown. A Calmar of 1.0 means that if the trader earned 30% annually but had a maximum drawdown of 30%, their ratio is 1.0. Values above 3.0 indicate great resilience.\nBeta: Measures a trader’s sensitivity relative to the market. In this project we use the S\u0026P 500 index. A beta of 1.0 means it moves exactly like the S\u0026P 500, 1.5 indicates 50% more volatility than the index, and 0.5 indicates half. Low values (\u003c 1.0) suggest defensive or market-neutral strategies.\nSame return, opposite risks With these concepts clear, let’s look at two traders with 30% annual return:\nTrader A: Consistent gains, Sharpe 2.0 and Sortino 2.5 (low risk) Trader B: Volatile year, Sharpe 0.5 and Sortino 0.4 (high risk) The investor’s experience will be radically different: while Trader A allows you to stay calm during moderate fluctuations, with Trader B there’s a risk of panic selling during a 60% drop.\nThe solution I’ve developed an analysis platform that provides:\nRisk-adjusted metrics (Sharpe, Sortino, Calmar) for comprehensive evaluation Portfolio diversification analysis (sectors, exchanges, countries) Elite trader identification based on sustainable performance criteria Data-driven insights that replace emotional decisions Methodology and dataset The analysis was performed on a dataset collected over 6 months. The data is updated daily in small subsets prioritizing those that haven’t been updated longest:\nDataset characteristics:\n1,500 traders analyzed with complete metrics history Collection period: June 29 - December 11, 2025 21 variables per trader including risk metrics, portfolio composition, and market data. Figure 1: Data collection timeline showing the number of traders last updated\nReturn distribution The analysis of annualized returns reveals an interesting distribution:\nKey statistics:\nMean: 15.60% annual Median: 15.09% annual Standard deviation: 21.37% 75th percentile: 23.80% annual 90th percentile: 34.80% annual Figure 2: Distribution of annualized returns. Most traders concentrate between 0-25%, with a long tail toward extraordinary returns\nThe distribution shows a significant concentration around the mean, with approximately 800 traders (53%) grouped in the 0-25% annual return range. However, the extended right tail reveals exceptional traders with returns above 100% annually, though these cases require especially careful analysis of the risk assumed.\nTechnical architecture The project implements a Medallion architecture (Bronze → Silver → Gold) in Databricks:\nBronze (Raw data):\nImmutable HTML responses from trader profiles Append-only pattern allowing complete reprocessing HTTP status code handling for debugging Silver (Curated data):\nParsed and validated risk metrics Portfolio composition in normalized format Data quality guaranteed through validations Gold (Analytics):\nElite traders (Sortino \u003e 7 AND Calmar \u003e 7) Top performers by annualized return Data ready for recommendation systems Analysis of top 25% performers Examining the upper quartile of traders (375 of the 1,500 analyzed), we find risk profiles significantly different from the average:\nRisk metrics of top 25%:\nMetric Mean Median Q1 Q3 Maximum Sharpe Ratio 1.05 0.94 0.77 1.21 3.80 Sortino Ratio 2.43 2.00 1.58 2.77 10.00 Calmar Ratio 1.77 1.02 0.61 2.23 10.00 Beta 1.21 1.12 0.88 1.46 3.30 Risk-return visualization Figure 3: Scatter plot of Sortino vs Calmar for top 25% performers. Elite traders (both metrics \u003e 7) appear in the upper right quadrant\nThe chart reveals several important insights:\nUnderestimated majority: Only 6 traders (1.6% of top 25%) meet both elite criteria (Sortino \u003e 7 AND Calmar \u003e 7)\nAsymmetric distribution: Most traders cluster in the Sortino 2-4 and Calmar 0.5-3 range, indicating moderate-high risk\nExceptional outliers: Traders like ferdisavage (Sortino 10, Calmar 10, Return 297.89%) represent statistically rare but real cases\nThe elite traders Of the 1,500 traders analyzed, only 6 meet the strictest elite criteria (Sortino \u003e 7 AND Calmar \u003e 7):\nTrader Annual Return Sharpe Sortino Calmar Beta Score ferdisavage 297.89% 3.75 10.00 10.00 0.92 10.00 Kevin_Pando 82.07% 3.15 10.00 10.00 0.57 10.00 Eugene_sofoklaio 134.46% 3.80 10.00 10.00 0.60 10.00 PelosiTracker 132.91% 2.49 8.37 10.00 0.43 9.18 edu-inversor 46.32% 1.00 7.82 8.67 0.81 8.25 CrijnWijers 52.14% 2.41 8.68 7.70 0.88 8.19 Common characteristics of elite traders:\nLow/medium betas: Range 0.43-0.92, well below the top 25% average of 1.21 Asymmetric returns: Sortino consistently \u003e 2x the Sharpe ratio Exceptional resilience: Calmar ratios demonstrating recovery from drawdowns Diversity of approaches: Returns from 46% to 298%, all with controlled risk Results and key findings The analysis of over 1,500 traders revealed interesting findings:\nOnly 0.4% of all traders meet elite criteria (6 of 1,500), and only 1.6% of the top 25% performers, indicating that most assume excessive risks even among the best\nThe Sortino ratio is consistently 2.3x higher than Sharpe (mean 2.43 vs 1.05) for the top 25%, demonstrating asymmetric returns (occasional large gains, minimal losses)\nTraders with Calmar \u003c 1.0 represent 50% of the top 25%, suggesting that even successful traders experience significant drawdowns that could trigger panic selling\nElite traders have an average beta of 0.70, significantly lower than the top 25% average of 1.21, indicating market-neutral strategies or defensive positioning\nThe top 25% median (Sortino 2.0, Calmar 1.02) is well below the elite threshold (7.0), revealing a huge gap between good and exceptional traders\nTechnology stack Databricks (DBR 13.x): Unified analytics platform Apache Spark (3.4+): Distributed data processing Delta Lake (2.0+): Reliable data lake storage Python (3.9+): Primary development language BeautifulSoup4: HTML parsing PySpark \u0026 Pandas: Data analysis Matplotlib \u0026 Seaborn: Statistical visualizations Next steps The following improvements are planned:\nML model to predict trader performance degradation based on historical patterns Interactive dashboard in Streamlit for dynamic trader comparison RESTful API for programmatic access to rankings and real-time metrics Alert system that notifies when metrics cross critical thresholds Backtesting framework to validate copy trading strategies before real investment Correlation analysis between traders for multi-trader portfolio optimization Conclusions This project demonstrates that risk-adjusted performance is fundamentally different from absolute performance. While social trading platforms highlight traders with 50-300% annual returns, only a tiny fraction (0.4%) combine these returns with sustainable risk profiles.\nFor investors, the lesson is clear: before copying a trader, analyze not only how much they earn, but how they earn it. A trader with 40% annually and Sortino 8.0 will probably provide a better experience (and long-term compound return) than one with 100% annually and Sortino 0.5.\nThe complete code is available in my GitHub repository.\n",
+  "wordCount" : "1156",
+  "inLanguage": "en",
+  "datePublished": "2025-12-11T00:00:00Z",
+  "dateModified": "2025-12-11T00:00:00Z",
   "author":{
     "@type": "Person",
     "name": "Daniel Alcaide"
@@ -167,6 +168,12 @@
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
                 </button>
+                    <ul class="lang-switch"><li>|</li>
+                        <li>
+                            <a href="https://danielalcaide.com/es/" title="Español"
+                                aria-label="Español">Es</a>
+                        </li>
+                    </ul>
             </div>
         </div>
         <ul id="menu">
@@ -179,97 +186,267 @@
   <header class="post-header">
     
     <h1 class="post-title entry-hint-parent">
-      Análisis de riesgo en Social Trading con arquitectura Lakehouse
+      From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python
     </h1>
-    <div class="post-meta"><span title='2025-11-27 00:00:00 +0000 UTC'>27-11-2025</span>&nbsp;·&nbsp;<span>3 min</span>&nbsp;·&nbsp;<span>Daniel Alcaide</span>
+    <div class="post-meta"><span title='2025-12-11 00:00:00 +0000 UTC'>11-12-2025</span>&nbsp;·&nbsp;<span>6 min</span>&nbsp;·&nbsp;<span>Daniel Alcaide</span>&nbsp;|&nbsp;<span>Translations:</span>
+<ul class="i18n_list">
+    <li>
+        <a href="https://danielalcaide.com/es/social-trading-risk-analytics/">Es</a>
+    </li>
+</ul>
 
 </div>
   </header> 
-  <div class="post-content"><p>En las plataformas de <em>social trading</em> como eToro, los inversores pueden copiar las estrategias de traders experimentados. Sin embargo, la mayoría de usuarios se fijan únicamente en la rentabilidad, ignorando el riesgo asociado. Este proyecto aborda precisamente ese problema.</p>
-<h2 id="el-problema">El problema<a hidden class="anchor" aria-hidden="true" href="#el-problema">#</a></h2>
-<p>Las plataformas de <em>social trading</em> destacan a los traders con mayores retornos, pero <strong>altos rendimientos no siempre implican bajo riesgo</strong>. Dos traders con un 30% de rentabilidad anual pueden tener perfiles de riesgo completamente diferentes:</p>
+  <div class="post-content"><p>On social trading platforms like eToro, investors can copy the strategies of experienced traders. However, most users focus solely on profitability, ignoring the associated risk. This project addresses precisely that problem.</p>
+<h2 id="the-problem">The problem<a hidden class="anchor" aria-hidden="true" href="#the-problem">#</a></h2>
+<p>Social trading platforms highlight traders with the highest returns, but <strong>high returns don&rsquo;t always mean low risk</strong>. To understand why, we need to talk about risk-adjusted metrics:</p>
+<p><strong>Sharpe Ratio:</strong> Measures the excess return obtained per unit of total volatility. A Sharpe of 2.0 means that for each point of risk assumed, 2 points of return are obtained. Values above 1.0 are considered good.</p>
+<p><strong>Sortino Ratio:</strong> Similar to Sharpe, but only penalizes downside volatility (losses), ignoring upward fluctuations. It&rsquo;s more realistic for investors, since gains aren&rsquo;t &ldquo;risk&rdquo;. A Sortino of 2.0+ is excellent.</p>
+<p><strong>Calmar Ratio:</strong> Compares annualized return with maximum historical drawdown. A Calmar of 1.0 means that if the trader earned 30% annually but had a maximum drawdown of 30%, their ratio is 1.0. Values above 3.0 indicate great resilience.</p>
+<p><strong>Beta:</strong> Measures a trader&rsquo;s sensitivity relative to the market. In this project we use the S&amp;P 500 index. A beta of 1.0 means it moves exactly like the S&amp;P 500, 1.5 indicates 50% more volatility than the index, and 0.5 indicates half. Low values (&lt; 1.0) suggest defensive or market-neutral strategies.</p>
+<h3 id="same-return-opposite-risks">Same return, opposite risks<a hidden class="anchor" aria-hidden="true" href="#same-return-opposite-risks">#</a></h3>
+<p>With these concepts clear, let&rsquo;s look at two traders with 30% annual return:</p>
 <ul>
-<li><strong>Trader A:</strong> Ganancias consistentes, ratios Sharpe 2.0 y Sortino 2.5</li>
-<li><strong>Trader B:</strong> Año volátil, ratios Sharpe 0.5 y Sortino 0.4</li>
+<li><strong>Trader A:</strong> Consistent gains, Sharpe 2.0 and Sortino 2.5 (low risk)</li>
+<li><strong>Trader B:</strong> Volatile year, Sharpe 0.5 and Sortino 0.4 (high risk)</li>
 </ul>
-<p>La experiencia del inversor será radicalmente distinta: mientras que con el Trader A se mantiene la calma durante las fluctuaciones, con el Trader B existe el riesgo de vender en pánico ante una caída del 60%.</p>
-<h2 id="la-solución">La solución<a hidden class="anchor" aria-hidden="true" href="#la-solución">#</a></h2>
-<p>He desarrollado una plataforma de análisis que proporciona:</p>
+<p>The investor&rsquo;s experience will be radically different: while Trader A allows you to stay calm during moderate fluctuations, with Trader B there&rsquo;s a risk of panic selling during a 60% drop.</p>
+<h2 id="the-solution">The solution<a hidden class="anchor" aria-hidden="true" href="#the-solution">#</a></h2>
+<p>I&rsquo;ve developed an analysis platform that provides:</p>
 <ul>
-<li><strong>Métricas ajustadas por riesgo</strong> (Sharpe, Sortino, Calmar) para una evaluación completa</li>
-<li><strong>Análisis de diversificación</strong> de carteras (sectores, bolsas, países)</li>
-<li><strong>Identificación de traders de élite</strong> basada en criterios de rendimiento sostenible</li>
-<li><strong>Insights basados en datos</strong> que sustituyen decisiones emocionales</li>
+<li><strong>Risk-adjusted metrics</strong> (Sharpe, Sortino, Calmar) for comprehensive evaluation</li>
+<li><strong>Portfolio diversification analysis</strong> (sectors, exchanges, countries)</li>
+<li><strong>Elite trader identification</strong> based on sustainable performance criteria</li>
+<li><strong>Data-driven insights</strong> that replace emotional decisions</li>
 </ul>
-<h3 id="arquitectura-técnica">Arquitectura técnica<a hidden class="anchor" aria-hidden="true" href="#arquitectura-técnica">#</a></h3>
-<p>El proyecto implementa una arquitectura Medallion (Bronze → Silver → Gold) en Databricks:</p>
-<p><strong>Bronze (Datos crudos):</strong></p>
+<h2 id="methodology-and-dataset">Methodology and dataset<a hidden class="anchor" aria-hidden="true" href="#methodology-and-dataset">#</a></h2>
+<p>The analysis was performed on a dataset collected over 6 months. The data is updated daily in small subsets prioritizing those that haven&rsquo;t been updated longest:</p>
+<p><strong>Dataset characteristics:</strong></p>
 <ul>
-<li>Respuestas HTML inmutables de perfiles de traders</li>
-<li>Patrón append-only que permite reprocesamiento completo</li>
-<li>Manejo de códigos de estado HTTP para debugging</li>
+<li><strong>1,500 traders analyzed</strong> with complete metrics history</li>
+<li><strong>Collection period:</strong> June 29 - December 11, 2025</li>
+<li><strong>21 variables per trader</strong> including risk metrics, portfolio composition, and market data.</li>
 </ul>
-<p><strong>Silver (Datos curados):</strong></p>
+<p><img alt="Figure 1" loading="lazy" src="/post/social-trading-risk-analytics/data-collection-timeline.png"></p>
+<p><em>Figure 1: Data collection timeline showing the number of traders last updated</em></p>
+<h3 id="return-distribution">Return distribution<a hidden class="anchor" aria-hidden="true" href="#return-distribution">#</a></h3>
+<p>The analysis of annualized returns reveals an interesting distribution:</p>
+<p><strong>Key statistics:</strong></p>
 <ul>
-<li>Métricas de riesgo parseadas y validadas</li>
-<li>Composición de carteras en formato normalizado</li>
-<li>Calidad de datos garantizada mediante validaciones</li>
+<li><strong>Mean:</strong> 15.60% annual</li>
+<li><strong>Median:</strong> 15.09% annual</li>
+<li><strong>Standard deviation:</strong> 21.37%</li>
+<li><strong>75th percentile:</strong> 23.80% annual</li>
+<li><strong>90th percentile:</strong> 34.80% annual</li>
 </ul>
-<p><strong>Gold (Analítica):</strong></p>
+<p><img alt="Figure 2" loading="lazy" src="/post/social-trading-risk-analytics/distribution-of-annualized-returns.png"></p>
+<p><em>Figure 2: Distribution of annualized returns. Most traders concentrate between 0-25%, with a long tail toward extraordinary returns</em></p>
+<p>The distribution shows a significant concentration around the mean, with approximately 800 traders (53%) grouped in the 0-25% annual return range. However, the extended right tail reveals exceptional traders with returns above 100% annually, though these cases require especially careful analysis of the risk assumed.</p>
+<h3 id="technical-architecture">Technical architecture<a hidden class="anchor" aria-hidden="true" href="#technical-architecture">#</a></h3>
+<p>The project implements a Medallion architecture (Bronze → Silver → Gold) in Databricks:</p>
+<p><strong>Bronze (Raw data):</strong></p>
 <ul>
-<li>Traders de élite (Sortino &gt; 7 Y Calmar &gt; 7)</li>
-<li>Top performers por rentabilidad anualizada</li>
-<li>Datos listos para sistemas de recomendación</li>
+<li>Immutable HTML responses from trader profiles</li>
+<li>Append-only pattern allowing complete reprocessing</li>
+<li>HTTP status code handling for debugging</li>
 </ul>
-<h3 id="métricas-financieras-clave">Métricas financieras clave<a hidden class="anchor" aria-hidden="true" href="#métricas-financieras-clave">#</a></h3>
-<p>El análisis se centra en dos métricas principales:</p>
-<p><strong>Ratio de Sortino</strong> (métrica primaria)</p>
+<p><strong>Silver (Curated data):</strong></p>
 <ul>
-<li>Penaliza solo la volatilidad a la baja (pérdidas)</li>
-<li>Ignora la volatilidad al alza (beneficiosa para inversores)</li>
-<li>Visión más realista del riesgo real</li>
+<li>Parsed and validated risk metrics</li>
+<li>Portfolio composition in normalized format</li>
+<li>Data quality guaranteed through validations</li>
 </ul>
-<p><strong>Ratio de Calmar</strong> (métrica secundaria)</p>
+<p><strong>Gold (Analytics):</strong></p>
 <ul>
-<li>Revela resiliencia ante el peor escenario posible</li>
-<li>Identifica traders que sobreviven a las caídas del mercado</li>
-<li>Muestra sostenibilidad psicológica</li>
+<li>Elite traders (Sortino &gt; 7 AND Calmar &gt; 7)</li>
+<li>Top performers by annualized return</li>
+<li>Data ready for recommendation systems</li>
 </ul>
-<h2 id="resultados">Resultados<a hidden class="anchor" aria-hidden="true" href="#resultados">#</a></h2>
-<p>El análisis de más de 1.000 traders reveló hallazgos interesantes:</p>
+<h2 id="analysis-of-top-25-performers">Analysis of top 25% performers<a hidden class="anchor" aria-hidden="true" href="#analysis-of-top-25-performers">#</a></h2>
+<p>Examining the upper quartile of traders (375 of the 1,500 analyzed), we find risk profiles significantly different from the average:</p>
+<p><strong>Risk metrics of top 25%:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Metric</th>
+          <th>Mean</th>
+          <th>Median</th>
+          <th>Q1</th>
+          <th>Q3</th>
+          <th>Maximum</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Sharpe Ratio</strong></td>
+          <td>1.05</td>
+          <td>0.94</td>
+          <td>0.77</td>
+          <td>1.21</td>
+          <td>3.80</td>
+      </tr>
+      <tr>
+          <td><strong>Sortino Ratio</strong></td>
+          <td>2.43</td>
+          <td>2.00</td>
+          <td>1.58</td>
+          <td>2.77</td>
+          <td>10.00</td>
+      </tr>
+      <tr>
+          <td><strong>Calmar Ratio</strong></td>
+          <td>1.77</td>
+          <td>1.02</td>
+          <td>0.61</td>
+          <td>2.23</td>
+          <td>10.00</td>
+      </tr>
+      <tr>
+          <td><strong>Beta</strong></td>
+          <td>1.21</td>
+          <td>1.12</td>
+          <td>0.88</td>
+          <td>1.46</td>
+          <td>3.30</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="risk-return-visualization">Risk-return visualization<a hidden class="anchor" aria-hidden="true" href="#risk-return-visualization">#</a></h3>
+<p><img alt="Figure 3" loading="lazy" src="/post/social-trading-risk-analytics/risk-adjusted-performance-sortino-vs-calmar-ratio.png"></p>
+<p><em>Figure 3: Scatter plot of Sortino vs Calmar for top 25% performers. Elite traders (both metrics &gt; 7) appear in the upper right quadrant</em></p>
+<p>The chart reveals several important insights:</p>
 <ol>
 <li>
-<p><strong>Solo el 15-20% de los traders con mayores retornos cumple los criterios de élite</strong> (Sortino &gt; 7, Calmar &gt; 7), lo que indica que la mayoría asume riesgos excesivos</p>
+<p><strong>Underestimated majority:</strong> Only 6 traders (1.6% of top 25%) meet both elite criteria (Sortino &gt; 7 AND Calmar &gt; 7)</p>
 </li>
 <li>
-<p><strong>El ratio Sortino es consistentemente 1.3-1.8x superior al Sharpe</strong> para traders de élite, demostrando retornos asimétricos (ganancias ocasionales grandes, pérdidas mínimas)</p>
+<p><strong>Asymmetric distribution:</strong> Most traders cluster in the Sortino 2-4 and Calmar 0.5-3 range, indicating moderate-high risk</p>
 </li>
 <li>
-<p><strong>Los traders con Calmar &lt; 0.3 tienen un 60% más de rotación</strong>, ya que las caídas profundas provocan ventas por pánico</p>
-</li>
-<li>
-<p><strong>Los traders de élite presentan un beta promedio de 0.7</strong>, indicando estrategias market-neutral o posicionamiento defensivo</p>
+<p><strong>Exceptional outliers:</strong> Traders like <code>ferdisavage</code> (Sortino 10, Calmar 10, Return 297.89%) represent statistically rare but real cases</p>
 </li>
 </ol>
-<h2 id="stack-tecnológico">Stack tecnológico<a hidden class="anchor" aria-hidden="true" href="#stack-tecnológico">#</a></h2>
+<h2 id="the-elite-traders">The elite traders<a hidden class="anchor" aria-hidden="true" href="#the-elite-traders">#</a></h2>
+<p>Of the 1,500 traders analyzed, only 6 meet the strictest elite criteria (Sortino &gt; 7 AND Calmar &gt; 7):</p>
+<table>
+  <thead>
+      <tr>
+          <th>Trader</th>
+          <th>Annual Return</th>
+          <th>Sharpe</th>
+          <th>Sortino</th>
+          <th>Calmar</th>
+          <th>Beta</th>
+          <th>Score</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>ferdisavage</strong></td>
+          <td>297.89%</td>
+          <td>3.75</td>
+          <td>10.00</td>
+          <td>10.00</td>
+          <td>0.92</td>
+          <td>10.00</td>
+      </tr>
+      <tr>
+          <td><strong>Kevin_Pando</strong></td>
+          <td>82.07%</td>
+          <td>3.15</td>
+          <td>10.00</td>
+          <td>10.00</td>
+          <td>0.57</td>
+          <td>10.00</td>
+      </tr>
+      <tr>
+          <td><strong>Eugene_sofoklaio</strong></td>
+          <td>134.46%</td>
+          <td>3.80</td>
+          <td>10.00</td>
+          <td>10.00</td>
+          <td>0.60</td>
+          <td>10.00</td>
+      </tr>
+      <tr>
+          <td><strong>PelosiTracker</strong></td>
+          <td>132.91%</td>
+          <td>2.49</td>
+          <td>8.37</td>
+          <td>10.00</td>
+          <td>0.43</td>
+          <td>9.18</td>
+      </tr>
+      <tr>
+          <td><strong>edu-inversor</strong></td>
+          <td>46.32%</td>
+          <td>1.00</td>
+          <td>7.82</td>
+          <td>8.67</td>
+          <td>0.81</td>
+          <td>8.25</td>
+      </tr>
+      <tr>
+          <td><strong>CrijnWijers</strong></td>
+          <td>52.14%</td>
+          <td>2.41</td>
+          <td>8.68</td>
+          <td>7.70</td>
+          <td>0.88</td>
+          <td>8.19</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Common characteristics of elite traders:</strong></p>
 <ul>
-<li><strong>Databricks</strong> (DBR 13.x): Plataforma de analítica unificada</li>
-<li><strong>Apache Spark</strong> (3.4+): Procesamiento distribuido de datos</li>
-<li><strong>Delta Lake</strong> (2.0+): Almacenamiento confiable en data lake</li>
-<li><strong>Python</strong> (3.9+): Lenguaje principal de desarrollo</li>
-<li><strong>BeautifulSoup4</strong>: Parsing de HTML</li>
-<li><strong>PySpark &amp; Pandas</strong>: Análisis de datos</li>
+<li><strong>Low/medium betas:</strong> Range 0.43-0.92, well below the top 25% average of 1.21</li>
+<li><strong>Asymmetric returns:</strong> Sortino consistently &gt; 2x the Sharpe ratio</li>
+<li><strong>Exceptional resilience:</strong> Calmar ratios demonstrating recovery from drawdowns</li>
+<li><strong>Diversity of approaches:</strong> Returns from 46% to 298%, all with controlled risk</li>
 </ul>
-<h2 id="próximos-pasos">Próximos pasos<a hidden class="anchor" aria-hidden="true" href="#próximos-pasos">#</a></h2>
-<p>Las siguientes mejoras están planificadas:</p>
+<h2 id="results-and-key-findings">Results and key findings<a hidden class="anchor" aria-hidden="true" href="#results-and-key-findings">#</a></h2>
+<p>The analysis of over 1,500 traders revealed interesting findings:</p>
+<ol>
+<li>
+<p><strong>Only 0.4% of all traders meet elite criteria</strong> (6 of 1,500), and only 1.6% of the top 25% performers, indicating that most assume excessive risks even among the best</p>
+</li>
+<li>
+<p><strong>The Sortino ratio is consistently 2.3x higher than Sharpe</strong> (mean 2.43 vs 1.05) for the top 25%, demonstrating asymmetric returns (occasional large gains, minimal losses)</p>
+</li>
+<li>
+<p><strong>Traders with Calmar &lt; 1.0 represent 50% of the top 25%</strong>, suggesting that even successful traders experience significant drawdowns that could trigger panic selling</p>
+</li>
+<li>
+<p><strong>Elite traders have an average beta of 0.70</strong>, significantly lower than the top 25% average of 1.21, indicating market-neutral strategies or defensive positioning</p>
+</li>
+<li>
+<p><strong>The top 25% median (Sortino 2.0, Calmar 1.02) is well below the elite threshold (7.0)</strong>, revealing a huge gap between good and exceptional traders</p>
+</li>
+</ol>
+<h2 id="technology-stack">Technology stack<a hidden class="anchor" aria-hidden="true" href="#technology-stack">#</a></h2>
 <ul>
-<li><strong>Modelo ML</strong> para predecir degradación del rendimiento de traders</li>
-<li><strong>Dashboard interactivo</strong> en Streamlit para comparación de traders</li>
-<li><strong>API RESTful</strong> para acceso programático a rankings</li>
-<li><strong>Sistema de alertas</strong> en tiempo real cuando métricas crucen umbrales</li>
-<li><strong>Framework de backtesting</strong> para estrategias de copy trading</li>
+<li><strong>Databricks</strong> (DBR 13.x): Unified analytics platform</li>
+<li><strong>Apache Spark</strong> (3.4+): Distributed data processing</li>
+<li><strong>Delta Lake</strong> (2.0+): Reliable data lake storage</li>
+<li><strong>Python</strong> (3.9+): Primary development language</li>
+<li><strong>BeautifulSoup4</strong>: HTML parsing</li>
+<li><strong>PySpark &amp; Pandas</strong>: Data analysis</li>
+<li><strong>Matplotlib &amp; Seaborn</strong>: Statistical visualizations</li>
 </ul>
-<p>El código completo está disponible en mi <a href="https://github.com/danielalcaide/social-trading-risk-analytics">repositorio de GitHub</a>.</p>
+<h2 id="next-steps">Next steps<a hidden class="anchor" aria-hidden="true" href="#next-steps">#</a></h2>
+<p>The following improvements are planned:</p>
+<ul>
+<li><strong>ML model</strong> to predict trader performance degradation based on historical patterns</li>
+<li><strong>Interactive dashboard</strong> in Streamlit for dynamic trader comparison</li>
+<li><strong>RESTful API</strong> for programmatic access to rankings and real-time metrics</li>
+<li><strong>Alert system</strong> that notifies when metrics cross critical thresholds</li>
+<li><strong>Backtesting framework</strong> to validate copy trading strategies before real investment</li>
+<li><strong>Correlation analysis</strong> between traders for multi-trader portfolio optimization</li>
+</ul>
+<h2 id="conclusions">Conclusions<a hidden class="anchor" aria-hidden="true" href="#conclusions">#</a></h2>
+<p>This project demonstrates that <strong>risk-adjusted performance is fundamentally different from absolute performance</strong>. While social trading platforms highlight traders with 50-300% annual returns, only a tiny fraction (0.4%) combine these returns with sustainable risk profiles.</p>
+<p>For investors, the lesson is clear: before copying a trader, analyze not only how much they earn, but <strong>how they earn it</strong>. A trader with 40% annually and Sortino 8.0 will probably provide a better experience (and long-term compound return) than one with 100% annually and Sortino 0.5.</p>
+<p>The complete code is available in my <a href="https://github.com/danielalcaide/social-trading-risk-analytics">GitHub repository</a>.</p>
 
   </div>
 
@@ -277,13 +454,13 @@
     <ul class="post-tags">
       <li><a href="https://danielalcaide.com/tags/python/">Python</a></li>
       <li><a href="https://danielalcaide.com/tags/databricks/">Databricks</a></li>
-      <li><a href="https://danielalcaide.com/tags/finanzas/">Finanzas</a></li>
+      <li><a href="https://danielalcaide.com/tags/finance/">Finance</a></li>
     </ul>
 
 <ul class="share-buttons">
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share Análisis de riesgo en Social Trading con arquitectura Lakehouse on x"
-            href="https://x.com/intent/tweet/?text=An%c3%a1lisis%20de%20riesgo%20en%20Social%20Trading%20con%20arquitectura%20Lakehouse&amp;url=https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f&amp;hashtags=python%2cdatabricks%2cfinanzas">
+        <a target="_blank" rel="noopener noreferrer" aria-label="share From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python on x"
+            href="https://x.com/intent/tweet/?text=From%201%2c500%20traders%20to%206%20elite%3a%20Financial%20risk%20analysis%20system%20with%20Databricks%20and%20Python&amp;url=https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f&amp;hashtags=python%2cdatabricks%2cfinance">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
@@ -291,8 +468,8 @@
         </a>
     </li>
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share Análisis de riesgo en Social Trading con arquitectura Lakehouse on linkedin"
-            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f&amp;title=An%c3%a1lisis%20de%20riesgo%20en%20Social%20Trading%20con%20arquitectura%20Lakehouse&amp;summary=An%c3%a1lisis%20de%20riesgo%20en%20Social%20Trading%20con%20arquitectura%20Lakehouse&amp;source=https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f">
+        <a target="_blank" rel="noopener noreferrer" aria-label="share From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f&amp;title=From%201%2c500%20traders%20to%206%20elite%3a%20Financial%20risk%20analysis%20system%20with%20Databricks%20and%20Python&amp;summary=From%201%2c500%20traders%20to%206%20elite%3a%20Financial%20risk%20analysis%20system%20with%20Databricks%20and%20Python&amp;source=https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
@@ -300,8 +477,8 @@
         </a>
     </li>
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share Análisis de riesgo en Social Trading con arquitectura Lakehouse on reddit"
-            href="https://reddit.com/submit?url=https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f&title=An%c3%a1lisis%20de%20riesgo%20en%20Social%20Trading%20con%20arquitectura%20Lakehouse">
+        <a target="_blank" rel="noopener noreferrer" aria-label="share From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python on reddit"
+            href="https://reddit.com/submit?url=https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f&title=From%201%2c500%20traders%20to%206%20elite%3a%20Financial%20risk%20analysis%20system%20with%20Databricks%20and%20Python">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
@@ -309,7 +486,7 @@
         </a>
     </li>
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share Análisis de riesgo en Social Trading con arquitectura Lakehouse on facebook"
+        <a target="_blank" rel="noopener noreferrer" aria-label="share From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python on facebook"
             href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
@@ -318,8 +495,8 @@
         </a>
     </li>
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share Análisis de riesgo en Social Trading con arquitectura Lakehouse on whatsapp"
-            href="https://api.whatsapp.com/send?text=An%c3%a1lisis%20de%20riesgo%20en%20Social%20Trading%20con%20arquitectura%20Lakehouse%20-%20https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f">
+        <a target="_blank" rel="noopener noreferrer" aria-label="share From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python on whatsapp"
+            href="https://api.whatsapp.com/send?text=From%201%2c500%20traders%20to%206%20elite%3a%20Financial%20risk%20analysis%20system%20with%20Databricks%20and%20Python%20-%20https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
@@ -327,8 +504,8 @@
         </a>
     </li>
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share Análisis de riesgo en Social Trading con arquitectura Lakehouse on telegram"
-            href="https://telegram.me/share/url?text=An%c3%a1lisis%20de%20riesgo%20en%20Social%20Trading%20con%20arquitectura%20Lakehouse&amp;url=https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f">
+        <a target="_blank" rel="noopener noreferrer" aria-label="share From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python on telegram"
+            href="https://telegram.me/share/url?text=From%201%2c500%20traders%20to%206%20elite%3a%20Financial%20risk%20analysis%20system%20with%20Databricks%20and%20Python&amp;url=https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f">
             <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
@@ -336,8 +513,8 @@
         </a>
     </li>
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share Análisis de riesgo en Social Trading con arquitectura Lakehouse on ycombinator"
-            href="https://news.ycombinator.com/submitlink?t=An%c3%a1lisis%20de%20riesgo%20en%20Social%20Trading%20con%20arquitectura%20Lakehouse&u=https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f">
+        <a target="_blank" rel="noopener noreferrer" aria-label="share From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=From%201%2c500%20traders%20to%206%20elite%3a%20Financial%20risk%20analysis%20system%20with%20Databricks%20and%20Python&u=https%3a%2f%2fdanielalcaide.com%2fsocial-trading-risk-analytics%2f">
             <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
                 xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
                 <path

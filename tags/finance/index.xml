@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Finance on Daniel Alcaide</title>
+    <link>https://danielalcaide.com/tags/finance/</link>
+    <description>Recent content in Finance on Daniel Alcaide</description>
+    <generator>Hugo -- 0.151.0</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 11 Dec 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://danielalcaide.com/tags/finance/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python</title>
+      <link>https://danielalcaide.com/social-trading-risk-analytics/</link>
+      <pubDate>Thu, 11 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>https://danielalcaide.com/social-trading-risk-analytics/</guid>
+      <description>&lt;p&gt;On social trading platforms like eToro, investors can copy the strategies of experienced traders. However, most users focus solely on profitability, ignoring the associated risk. This project addresses precisely that problem.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
