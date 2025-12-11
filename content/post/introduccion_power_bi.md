@@ -7,6 +7,7 @@ categories: ["tutoriales"]
 url: /introduccion_powerbi
 showToc: true
 TocOpen: true
+draft: true
 ---
 
 > Este tutorial esta creado a partir de mis notas del curso de *Introduction to Power BI de DataCamp* 

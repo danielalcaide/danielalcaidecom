@@ -10,6 +10,7 @@ categories:
 url: "/estandarizacion_de_datos"
 showToc: false
 TocOpen: false
+draft: true
 
 ---
 La **estandarización** de los datos es un paso común en el preprocesamiento. Ésta se puede definir como la acción de cambiar los datos para que estén centrados en el 0 y tengan una desviación estándar de 1. El objetivo es llevar las variables con diferentes unidades a una común. Muchas tareas de aprendizaje automático son sensibles a las magnitudes de los datos y se supone que la estandarización elimina esos factores. Por ejemplo, el método de *k-nearest neighbors* es sensible a las magnitudes de las variables, por lo que se deben estandarizar los datos. En cambio, los métodos basados en árboles (*tree-based methods*) no son sensibles a los diferentes rangos de las variables, por lo que la estandarización no es necesaria.

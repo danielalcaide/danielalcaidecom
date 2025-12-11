@@ -8,6 +8,7 @@ categories: ["tutoriales"]
 url: /introduccion_python
 showToc: true
 TocOpen: true
+draft: true
 ---
 
 ## ¿Qué es Python?

@@ -8,6 +8,7 @@ categories: ["tutoriales"]
 url: /definir_funciones_python
 showToc: true
 TocOpen: true
+draft: true
 ---
 
 En este tutorial explicaremos cómo escribir diferentes tipos funciones personalizadas: funciones sin parámetros, funciones con parámetros únicos o  múltiples y funciones que devuelven un único o múltiples valores.

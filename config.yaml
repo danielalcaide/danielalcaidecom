@@ -2,13 +2,18 @@
 baseURL: https://danielalcaide.com
 title: Daniel Alcaide
 
+# Build settings
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
 pagination:
   disableAliases: false
   pagerSize: 5
 
 theme: "PaperMod"
-defaultContentLanguage: es
-languageCode: es
+defaultContentLanguage: en
+languageCode: en
 
 markup:
   goldmark:
@@ -23,21 +28,22 @@ minify:
     minifyOutput: false
 
 languages:
+  en:
+    languageName: "English"
+    weight: 1
+    params:
+      homeInfoParams:
+        Title: "\U0001F44B Hi, I'm Daniel Alcaide"
+        Content: This is my personal website where I write about data science. 
   es:
     languageName: "Español"
-    weight: 1
+    weight: 2
     # home-info mode
     params:
       homeInfoParams:
         Title: "\U0001F44B Hola, soy Daniel Alcaide"
         Content: Este es mi sitio web personal donde escribo sobre ciencia de datos.
 
-  # en:
-  #   languageName: "English"
-  #   weight: 2
-  #   homeInfoParams:
-  #     Title: "\U0001F44B Hi, I'm Daniel Alcaide"
-  #     Content: This is my personal website where I write about data science. 
       
 params:
     env: production # to enable google analytics, opengraph, twitter-cards and schema.
