@@ -179,4 +179,4 @@ Este proyecto demuestra que **el rendimiento ajustado por riesgo es fundamentalm
 
 Para inversores, la lección es clara: antes de copiar a un trader, analiza no solo cuánto gana, sino **cómo lo gana**. Un trader con 40% anual y Sortino 8.0 probablemente proporcionará mejor experiencia (y retorno compuesto a largo plazo) que uno con 100% anual y Sortino 0.5.
 
-El código completo está disponible en mi [repositorio de GitHub](https://github.com/danielalcaide/social-trading-risk-analytics).
+El código completo está disponible en mi [repositorio de GitHub](https://github.com/danielalcaide/social-trading-risk-analytics-platform).

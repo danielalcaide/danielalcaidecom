@@ -179,4 +179,4 @@ This project demonstrates that **risk-adjusted performance is fundamentally diff
 
 For investors, the lesson is clear: before copying a trader, analyze not only how much they earn, but **how they earn it**. A trader with 40% annually and Sortino 8.0 will probably provide a better experience (and long-term compound return) than one with 100% annually and Sortino 0.5.
 
-The complete code is available in my [GitHub repository](https://github.com/danielalcaide/social-trading-risk-analytics).
+The complete code is available in my [GitHub repository](https://github.com/danielalcaide/social-trading-risk-analytics-platform).
