@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks | Daniel Alcaide</title>
+<meta name="keywords" content="python, databricks, gen-ai">
+<meta name="description" content="La construcción de agentes de IA Generativa (GenAI) ha pasado de ser una novedad a una necesidad. Sin embargo, una vez que el &ldquo;Hola Mundo&rdquo; de tu RAG (Retrieval-Augmented Generation) funciona, te enfrentas al verdadero problema de producción: ¿Cómo sé qué está pasando realmente dentro de mi agente?
+Recientemente, Databricks ha evolucionado las Inference Tables, permitiendo capturar payloads y métricas de rendimiento directamente desde el Model Serving. Sin embargo, cuando necesitamos un análisis profundo del razonamiento del agente —sus &ldquo;pensamientos&rdquo;, recuperación de documentos y evaluaciones intermedias—, las MLflow Traces siguen siendo la fuente de verdad más rica para entender la cadena de razonamiento (Chain of Thought) y los pasos intermedios.">
+<meta name="author" content="Daniel Alcaide">
+<link rel="canonical" href="https://danielalcaide.com/es/databricks-observability-gen-ai/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.343cc480b9ffc8f04ccbe5e968ad674880cab773ec19905e93033065c1e7a804.css" integrity="sha256-NDzEgLn/yPBMy&#43;XpaK1nSIDKt3PsGZBekwMwZcHnqAQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://danielalcaide.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://danielalcaide.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://danielalcaide.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://danielalcaide.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://danielalcaide.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://danielalcaide.com/databricks-observability-gen-ai/">
+<link rel="alternate" hreflang="es" href="https://danielalcaide.com/es/databricks-observability-gen-ai/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://danielalcaide.com/es/databricks-observability-gen-ai/">
+  <meta property="og:site_name" content="Daniel Alcaide">
+  <meta property="og:title" content="Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks">
+  <meta property="og:description" content="La construcción de agentes de IA Generativa (GenAI) ha pasado de ser una novedad a una necesidad. Sin embargo, una vez que el “Hola Mundo” de tu RAG (Retrieval-Augmented Generation) funciona, te enfrentas al verdadero problema de producción: ¿Cómo sé qué está pasando realmente dentro de mi agente?
+Recientemente, Databricks ha evolucionado las Inference Tables, permitiendo capturar payloads y métricas de rendimiento directamente desde el Model Serving. Sin embargo, cuando necesitamos un análisis profundo del razonamiento del agente —sus “pensamientos”, recuperación de documentos y evaluaciones intermedias—, las MLflow Traces siguen siendo la fuente de verdad más rica para entender la cadena de razonamiento (Chain of Thought) y los pasos intermedios.">
+  <meta property="og:locale" content="es">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2026-02-04T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-02-04T00:00:00+00:00">
+    <meta property="article:tag" content="Python">
+    <meta property="article:tag" content="Databricks">
+    <meta property="article:tag" content="Gen-Ai">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks">
+<meta name="twitter:description" content="La construcción de agentes de IA Generativa (GenAI) ha pasado de ser una novedad a una necesidad. Sin embargo, una vez que el &ldquo;Hola Mundo&rdquo; de tu RAG (Retrieval-Augmented Generation) funciona, te enfrentas al verdadero problema de producción: ¿Cómo sé qué está pasando realmente dentro de mi agente?
+Recientemente, Databricks ha evolucionado las Inference Tables, permitiendo capturar payloads y métricas de rendimiento directamente desde el Model Serving. Sin embargo, cuando necesitamos un análisis profundo del razonamiento del agente —sus &ldquo;pensamientos&rdquo;, recuperación de documentos y evaluaciones intermedias—, las MLflow Traces siguen siendo la fuente de verdad más rica para entender la cadena de razonamiento (Chain of Thought) y los pasos intermedios.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://danielalcaide.com/es/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks",
+      "item": "https://danielalcaide.com/es/databricks-observability-gen-ai/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks",
+  "name": "Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks",
+  "description": "La construcción de agentes de IA Generativa (GenAI) ha pasado de ser una novedad a una necesidad. Sin embargo, una vez que el \u0026ldquo;Hola Mundo\u0026rdquo; de tu RAG (Retrieval-Augmented Generation) funciona, te enfrentas al verdadero problema de producción: ¿Cómo sé qué está pasando realmente dentro de mi agente?\nRecientemente, Databricks ha evolucionado las Inference Tables, permitiendo capturar payloads y métricas de rendimiento directamente desde el Model Serving. Sin embargo, cuando necesitamos un análisis profundo del razonamiento del agente —sus \u0026ldquo;pensamientos\u0026rdquo;, recuperación de documentos y evaluaciones intermedias—, las MLflow Traces siguen siendo la fuente de verdad más rica para entender la cadena de razonamiento (Chain of Thought) y los pasos intermedios.\n",
+  "keywords": [
+    "python", "databricks", "gen-ai"
+  ],
+  "articleBody": "La construcción de agentes de IA Generativa (GenAI) ha pasado de ser una novedad a una necesidad. Sin embargo, una vez que el “Hola Mundo” de tu RAG (Retrieval-Augmented Generation) funciona, te enfrentas al verdadero problema de producción: ¿Cómo sé qué está pasando realmente dentro de mi agente?\nRecientemente, Databricks ha evolucionado las Inference Tables, permitiendo capturar payloads y métricas de rendimiento directamente desde el Model Serving. Sin embargo, cuando necesitamos un análisis profundo del razonamiento del agente —sus “pensamientos”, recuperación de documentos y evaluaciones intermedias—, las MLflow Traces siguen siendo la fuente de verdad más rica para entender la cadena de razonamiento (Chain of Thought) y los pasos intermedios.\nEn este post, comparto una arquitectura de referencia que he desarrollado para extraer, procesar y monitorear trazas de agentes GenAI, transformando JSONs anidados en métricas de calidad accionables utilizando Databricks Lakehouse Monitoring.\nEl Desafío: La “Caja Negra” de los JSONs Las herramientas nativas de MLflow son excelentes para la depuración interactiva (traza por traza). Pero los Arquitectos de Soluciones y Data Scientists necesitamos ver la foto completa: tendencias de latencia, drift en la calidad de las respuestas y costes de tokens a lo largo del tiempo.\nEl flujo de trabajo que propongo consta de tres etapas:\nIngesta: Extracción batch de trazas desde MLflow. Refinamiento: “Desempaquetado” de métricas complejas y conteo de tokens. Monitoreo: Activación de Databricks Lakehouse Monitoring. 1. La Ingesta: El Reto de la Retroactividad Databricks ha avanzado enormemente en la integración de MLflow con Unity Catalog, permitiendo en escenarios ideales que los experimentos vuelquen las trazas directamente en tablas de sistema. Sin embargo, en el mundo real nos topamos con una barrera ineludible: la retroactividad.\nSi la configuración de sincronización no se realizó estrictamente antes de iniciar el experimento —algo común en fases exploratorias o proyectos legacy—, esas trazas no se materializarán mágicamente en tus tablas. Permanecen atrapadas en el servidor de MLflow, inaccesibles para el análisis SQL masivo. Por tanto, aunque la sincronización nativa es el futuro, la extracción programática sigue siendo la única llave para recuperar esa “historia perdida” y unificar todos tus datos de desarrollo y producción en un mismo lugar.\nEl siguiente script resuelve este vacío utilizando MlflowClient para “viajar en el tiempo”, recuperar esas trazas huérfanas y aterrizarlas en una tabla Delta bajo nuestro control.\n💻 Template: Trace Exporter (Backfill Strategy) Este script es la solución para descargar trazas masivas gestionando la paginación de la API, permitiéndote rellenar (backfill) los datos de experimentos pasados que el sistema automático no capturó.\n# ------------------------------------------------------------------------- # MLflow Trace Exporter Template # Purpose: Fetch traces from an MLflow Experiment and save to a Delta Table # ------------------------------------------------------------------------- import mlflow from mlflow.tracking import MlflowClient import pandas as pd from pyspark.sql import SparkSession spark = SparkSession.builder.getOrCreate() # CONFIGURATION # Replace with your specific Experiment ID and Target Table EXPERIMENT_ID = \"YOUR_EXPERIMENT_ID_HERE\" TARGET_TABLE = \"catalog.schema.genai_raw_traces\" BATCH_SIZE = 100 SELECTED_COLUMNS = [ \"request_id\", \"request\", \"response\", \"start_time_ms\", \"execution_time_ms\", \"status\", \"tags\" # Add other columns present in your traces ] client = MlflowClient() page_token = None print(f\"Starting export for Experiment {EXPERIMENT_ID}...\") while True: # 1. Fetch a batch of traces results = client.search_traces( experiment_ids=[EXPERIMENT_ID], max_results=BATCH_SIZE, order_by=[\"start_time DESC\"], page_token=page_token ) if not results: break # 2. Convert traces into a Pandas DataFrame # Note: trace.to_pandas_dataframe_row() flattens the top-level object batch_df = pd.DataFrame([trace.to_pandas_dataframe_row() for trace in results]) # 3. Filter and select columns ensuring schema consistency # (Ensure columns exist in batch_df before selecting) available_cols = [c for c in SELECTED_COLUMNS if c in batch_df.columns] batch_df = batch_df[available_cols] # 4. Write to Delta spark_df = spark.createDataFrame(batch_df) print(f\"Writing batch of {len(batch_df)} traces to {TARGET_TABLE}...\") spark_df.write.format(\"delta\").mode(\"append\").option(\"mergeSchema\", \"true\").saveAsTable(TARGET_TABLE) # 5. Handle Pagination if not results.token: break page_token = results.token print(\"Export complete.\") 2. Procesamiento: De JSON a Métricas Analíticas Las trazas crudas suelen contener métricas de evaluación (como “faithfulness” o “answer_relevance”) anidadas en diccionarios complejos o listas de JSONs dentro de una columna. Para visualizar esto en SQL, necesitamos “aplanar” (unpack) estas estructuras.\nAdemás, he incorporado tiktoken para calcular el consumo de tokens de manera precisa, algo fundamental para el control de costes (FinOps).\n💻 Template: Metrics Extractor \u0026 Token Counter Este script hace dos cosas clave:\nUsa tiktoken para calcular el uso real de tokens para calcular el consumo de tokens de manera precisa (ya que len(string) no refleja el coste real de los LLMs). Detecta dinámicamente qué métricas existen en los mapas de evaluación y crea una columna para cada una (Schema Evolution). # ------------------------------------------------------------------------- # Trace Processing \u0026 Metrics Extraction Template # Purpose: Clean raw traces, count tokens, and unpack nested metrics # ------------------------------------------------------------------------- import json import tiktoken from pyspark.sql.functions import col, udf, pandas_udf, explode, map_keys from pyspark.sql.types import IntegerType, MapType, StringType, FloatType from typing import Dict # CONFIGURATION INPUT_TABLE = \"catalog.schema.genai_raw_traces\" OUTPUT_TABLE = \"catalog.schema.genai_processed_traces_gold\" # Select the encoding appropriate for your model (e.g., cl100k_base for GPT-4) ENCODING_NAME = \"cl100k_base\" # --- UDF 1: Token Counting --- @pandas_udf(IntegerType()) def udf_count_tokens(texts: pd.Series) -\u003e pd.Series: encoding = tiktoken.get_encoding(ENCODING_NAME) # Handle potential None/Null values safely return texts.apply(lambda x: len(encoding.encode(x)) if x else 0) # --- UDF 2: Extract Metrics from Nested JSON/Maps --- # Assumes 'assessments' is a list of dictionaries or a JSON string map @udf(MapType(StringType(), FloatType())) def udf_extract_metrics_map(assessments_str): if not assessments_str: return {} try: # Logic depends on how your metrics are stored. # Example: Parsing a list of dicts: [{\"name\": \"relevance\", \"value\": 0.9}, ...] data = json.loads(assessments_str) if isinstance(assessments_str, str) else assessments_str metrics_map = {} # Adapt this loop to your specific trace structure if isinstance(data, list): for item in data: name = item.get(\"name\") or item.get(\"metric_name\") value = item.get(\"value\") or item.get(\"score\") if name and value is not None: # Convert boolean feedbacks (Yes/No) to float (1.0/0.0) if needed if str(value).lower() == \"yes\": value = 1.0 elif str(value).lower() == \"no\": value = 0.0 metrics_map[name] = float(value) return metrics_map except Exception as e: return {} # --- MAIN PIPELINE --- df_raw = spark.table(INPUT_TABLE) # 1. Calculate Tokens df_processed = df_raw.withColumn(\"token_count_request\", udf_count_tokens(col(\"request\")))\\ .withColumn(\"token_count_response\", udf_count_tokens(col(\"response\"))) # 2. Extract Metrics Map # Assuming your traces have an 'assessments' or 'feedback' column if \"assessments\" in df_processed.columns: df_processed = df_processed.withColumn(\"metrics_map\", udf_extract_metrics_map(col(\"assessments\"))) # 3. Dynamic Schema Evolution (Unpacking the Map) # Identify all unique metric keys present in the data keys_df = df_processed.select(explode(map_keys(col(\"metrics_map\")))).distinct() available_metrics = [row[0] for row in keys_df.collect()] print(f\"Dynamic metrics found: {available_metrics}\") # Promote each metric from the Map to a top-level column cols = [col(c) for c in df_processed.columns if c != 'metrics_map'] for metric in available_metrics: cols.append(col(\"metrics_map\").getItem(metric).alias(f\"metric_{metric}\")) df_final = df_processed.select(*cols) else: df_final = df_processed # 4. Save to Gold Table print(f\"Saving to {OUTPUT_TABLE}...\") df_final.write.format(\"delta\").mode(\"overwrite\").option(\"mergeSchema\", \"true\").saveAsTable(OUTPUT_TABLE) 3. Monitoreo: Automatización con Databricks SDK El paso final es no tener que mirar esta tabla manualmente. Usando el Databricks SDK, podemos desplegar programáticamente un “Quality Monitor”. Esto genera automáticamente un dashboard que rastrea el data drift y la calidad del modelo a lo largo del tiempo.\n💻 Template: Quality Monitor Creation Este script conecta la tabla procesada con el sistema de monitoreo de Databricks.\n# ------------------------------------------------------------------------- # Databricks Lakehouse Monitor Setup Template # Purpose: Programmatically create a Quality Monitor for the Gold Table # ------------------------------------------------------------------------- from databricks.sdk import WorkspaceClient from databricks.sdk.service.catalog import MonitorTimeSeries w = WorkspaceClient() # CONFIGURATION TABLE_NAME = \"catalog.schema.genai_processed_traces_gold\" ASSETS_DIR = \"/Workspace/Users/your_user@domain.com/genai_monitoring\" OUTPUT_SCHEMA = \"catalog.schema\" # Where metric tables are stored print(f\"Creating monitor for {TABLE_NAME}...\") try: w.quality_monitors.create( table_name=TABLE_NAME, assets_dir=ASSETS_DIR, output_schema_name=OUTPUT_SCHEMA, # Configure Time Series monitoring based on request timestamp time_series=MonitorTimeSeries( timestamp_col=\"start_time_ms\", # Or your timestamp column granularities=[\"1 hour\", \"1 day\"] ) ) print(\"Monitor created successfully! Check the 'Quality' tab in Unity Catalog.\") except Exception as e: print(f\"Note: Monitor might already exist or error occurred: {e}\") Conclusión Integrar las MLflow Traces con el ecosistema de datos de Unity Catalog nos permite pasar de la anécdota (“el bot respondió mal una vez”) a la estadística (“la métrica de ‘faithfulness’ ha caído un 5% en la última versión”).\nEste enfoque nos da control total sobre los datos, permitiendo cruzar métricas de IA con datos de negocio, algo imposible si usamos herramientas de monitoreo en silos.\nReferencias y Lectura Adicional Databricks Documentation: Inference Tables Databricks Documentation: Model Serving Endpoints MLflow Tracing for GenAI ",
+  "wordCount" : "1337",
+  "inLanguage": "es",
+  "datePublished": "2026-02-04T00:00:00Z",
+  "dateModified": "2026-02-04T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Daniel Alcaide"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://danielalcaide.com/es/databricks-observability-gen-ai/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Daniel Alcaide",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://danielalcaide.com/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://danielalcaide.com/es/" accesskey="h" title="Daniel Alcaide (Alt + H)">Daniel Alcaide</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                    <ul class="lang-switch"><li>|</li>
+                        <li>
+                            <a href="https://danielalcaide.com/" title="English"
+                                aria-label="English">En</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks
+    </h1>
+    <div class="post-meta"><span title='2026-02-04 00:00:00 +0000 UTC'>04-02-2026</span>&nbsp;·&nbsp;<span>7 min</span>&nbsp;·&nbsp;<span>Daniel Alcaide</span>&nbsp;|&nbsp;<span>Traducciones:</span>
+<ul class="i18n_list">
+    <li>
+        <a href="https://danielalcaide.com/databricks-observability-gen-ai/">En</a>
+    </li>
+</ul>
+
+</div>
+  </header> 
+  <div class="post-content"><p>La construcción de agentes de IA Generativa (GenAI) ha pasado de ser una novedad a una necesidad. Sin embargo, una vez que el &ldquo;Hola Mundo&rdquo; de tu RAG (Retrieval-Augmented Generation) funciona, te enfrentas al verdadero problema de producción: <strong>¿Cómo sé qué está pasando realmente dentro de mi agente?</strong></p>
+<p>Recientemente, Databricks ha evolucionado las <strong>Inference Tables</strong>, permitiendo capturar payloads y métricas de rendimiento directamente desde el Model Serving. Sin embargo, cuando necesitamos un análisis profundo del <em>razonamiento</em> del agente —sus &ldquo;pensamientos&rdquo;, recuperación de documentos y evaluaciones intermedias—, las <strong>MLflow Traces</strong> siguen siendo la fuente de verdad más rica para entender la <strong>cadena de razonamiento (Chain of Thought)</strong> y los pasos intermedios.</p>
+<p>En este post, comparto una arquitectura de referencia que he desarrollado para extraer, procesar y monitorear trazas de agentes GenAI, transformando JSONs anidados en métricas de calidad accionables utilizando Databricks Lakehouse Monitoring.</p>
+<h2 id="el-desafío-la-caja-negra-de-los-jsons">El Desafío: La &ldquo;Caja Negra&rdquo; de los JSONs<a hidden class="anchor" aria-hidden="true" href="#el-desafío-la-caja-negra-de-los-jsons">#</a></h2>
+<p>Las herramientas nativas de MLflow son excelentes para la depuración interactiva (traza por traza). Pero los Arquitectos de Soluciones y Data Scientists necesitamos ver la foto completa: tendencias de latencia, drift en la calidad de las respuestas y costes de tokens a lo largo del tiempo.</p>
+<p>El flujo de trabajo que propongo consta de tres etapas:</p>
+<ol>
+<li><strong>Ingesta:</strong> Extracción batch de trazas desde MLflow.</li>
+<li><strong>Refinamiento:</strong> &ldquo;Desempaquetado&rdquo; de métricas complejas y conteo de tokens.</li>
+<li><strong>Monitoreo:</strong> Activación de Databricks Lakehouse Monitoring.</li>
+</ol>
+<h3 id="1-la-ingesta-el-reto-de-la-retroactividad">1. La Ingesta: El Reto de la Retroactividad<a hidden class="anchor" aria-hidden="true" href="#1-la-ingesta-el-reto-de-la-retroactividad">#</a></h3>
+<p>Databricks ha avanzado enormemente en la integración de MLflow con Unity Catalog, permitiendo en escenarios ideales que los experimentos vuelquen las trazas directamente en tablas de sistema. Sin embargo, en el mundo real nos topamos con una barrera ineludible: <strong>la retroactividad</strong>.</p>
+<p>Si la configuración de sincronización no se realizó estrictamente antes de iniciar el experimento —algo común en fases exploratorias o proyectos <em>legacy</em>—, esas trazas no se materializarán mágicamente en tus tablas. Permanecen atrapadas en el servidor de MLflow, inaccesibles para el análisis SQL masivo. Por tanto, aunque la sincronización nativa es el futuro, <strong>la extracción programática sigue siendo la única llave para recuperar esa &ldquo;historia perdida&rdquo;</strong> y unificar todos tus datos de desarrollo y producción en un mismo lugar.</p>
+<p>El siguiente script resuelve este vacío utilizando <code>MlflowClient</code> para &ldquo;viajar en el tiempo&rdquo;, recuperar esas trazas huérfanas y aterrizarlas en una tabla Delta bajo nuestro control.</p>
+<h4 id="-template-trace-exporter-backfill-strategy">💻 Template: Trace Exporter (Backfill Strategy)<a hidden class="anchor" aria-hidden="true" href="#-template-trace-exporter-backfill-strategy">#</a></h4>
+<p>Este script es la solución para descargar trazas masivas gestionando la paginación de la API, permitiéndote rellenar (<em>backfill</em>) los datos de experimentos pasados que el sistema automático no capturó.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># MLflow Trace Exporter Template</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Purpose: Fetch traces from an MLflow Experiment and save to a Delta Table</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> mlflow
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> mlflow.tracking <span style="color:#f92672">import</span> MlflowClient
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pyspark.sql <span style="color:#f92672">import</span> SparkSession
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>spark <span style="color:#f92672">=</span> SparkSession<span style="color:#f92672">.</span>builder<span style="color:#f92672">.</span>getOrCreate()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># CONFIGURATION</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Replace with your specific Experiment ID and Target Table</span>
+</span></span><span style="display:flex;"><span>EXPERIMENT_ID <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;YOUR_EXPERIMENT_ID_HERE&#34;</span>
+</span></span><span style="display:flex;"><span>TARGET_TABLE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;catalog.schema.genai_raw_traces&#34;</span>
+</span></span><span style="display:flex;"><span>BATCH_SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span> 
+</span></span><span style="display:flex;"><span>SELECTED_COLUMNS <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;request_id&#34;</span>, <span style="color:#e6db74">&#34;request&#34;</span>, <span style="color:#e6db74">&#34;response&#34;</span>, <span style="color:#e6db74">&#34;start_time_ms&#34;</span>, 
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;execution_time_ms&#34;</span>, <span style="color:#e6db74">&#34;status&#34;</span>, <span style="color:#e6db74">&#34;tags&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Add other columns present in your traces</span>
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>client <span style="color:#f92672">=</span> MlflowClient()
+</span></span><span style="display:flex;"><span>page_token <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Starting export for Experiment </span><span style="color:#e6db74">{</span>EXPERIMENT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">...&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 1. Fetch a batch of traces</span>
+</span></span><span style="display:flex;"><span>    results <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>search_traces(
+</span></span><span style="display:flex;"><span>        experiment_ids<span style="color:#f92672">=</span>[EXPERIMENT_ID],
+</span></span><span style="display:flex;"><span>        max_results<span style="color:#f92672">=</span>BATCH_SIZE,
+</span></span><span style="display:flex;"><span>        order_by<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;start_time DESC&#34;</span>],
+</span></span><span style="display:flex;"><span>        page_token<span style="color:#f92672">=</span>page_token
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> results:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 2. Convert traces into a Pandas DataFrame</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Note: trace.to_pandas_dataframe_row() flattens the top-level object</span>
+</span></span><span style="display:flex;"><span>    batch_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame([trace<span style="color:#f92672">.</span>to_pandas_dataframe_row() <span style="color:#66d9ef">for</span> trace <span style="color:#f92672">in</span> results])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 3. Filter and select columns ensuring schema consistency</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># (Ensure columns exist in batch_df before selecting)</span>
+</span></span><span style="display:flex;"><span>    available_cols <span style="color:#f92672">=</span> [c <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> SELECTED_COLUMNS <span style="color:#66d9ef">if</span> c <span style="color:#f92672">in</span> batch_df<span style="color:#f92672">.</span>columns]
+</span></span><span style="display:flex;"><span>    batch_df <span style="color:#f92672">=</span> batch_df[available_cols]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 4. Write to Delta</span>
+</span></span><span style="display:flex;"><span>    spark_df <span style="color:#f92672">=</span> spark<span style="color:#f92672">.</span>createDataFrame(batch_df)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Writing batch of </span><span style="color:#e6db74">{</span>len(batch_df)<span style="color:#e6db74">}</span><span style="color:#e6db74"> traces to </span><span style="color:#e6db74">{</span>TARGET_TABLE<span style="color:#e6db74">}</span><span style="color:#e6db74">...&#34;</span>)
+</span></span><span style="display:flex;"><span>    spark_df<span style="color:#f92672">.</span>write<span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;delta&#34;</span>)<span style="color:#f92672">.</span>mode(<span style="color:#e6db74">&#34;append&#34;</span>)<span style="color:#f92672">.</span>option(<span style="color:#e6db74">&#34;mergeSchema&#34;</span>, <span style="color:#e6db74">&#34;true&#34;</span>)<span style="color:#f92672">.</span>saveAsTable(TARGET_TABLE)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 5. Handle Pagination</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> results<span style="color:#f92672">.</span>token:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    page_token <span style="color:#f92672">=</span> results<span style="color:#f92672">.</span>token
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Export complete.&#34;</span>)
+</span></span></code></pre></div><h3 id="2-procesamiento-de-json-a-métricas-analíticas">2. Procesamiento: De JSON a Métricas Analíticas<a hidden class="anchor" aria-hidden="true" href="#2-procesamiento-de-json-a-métricas-analíticas">#</a></h3>
+<p>Las trazas crudas suelen contener métricas de evaluación (como &ldquo;faithfulness&rdquo; o &ldquo;answer_relevance&rdquo;) anidadas en diccionarios complejos o listas de JSONs dentro de una columna. Para visualizar esto en SQL, necesitamos &ldquo;aplanar&rdquo; (unpack) estas estructuras.</p>
+<p>Además, he incorporado <code>tiktoken</code> para calcular el consumo de tokens de manera precisa, algo fundamental para el control de costes (FinOps).</p>
+<p><img alt="Figura 1" loading="lazy" src="/post/databricks-observability-gen-ai/mlflow-traces-json-unpacking-example.png"></p>
+<h4 id="-template-metrics-extractor--token-counter">💻 Template: Metrics Extractor &amp; Token Counter<a hidden class="anchor" aria-hidden="true" href="#-template-metrics-extractor--token-counter">#</a></h4>
+<p>Este script hace dos cosas clave:</p>
+<ol>
+<li>Usa <code>tiktoken</code> para calcular el uso real de tokens para calcular el consumo de tokens de manera precisa <strong>(ya que <code>len(string)</code> no refleja el coste real de los LLMs)</strong>.</li>
+<li>Detecta dinámicamente qué métricas existen en los mapas de evaluación y crea una columna para cada una (Schema Evolution).</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Trace Processing &amp; Metrics Extraction Template</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Purpose: Clean raw traces, count tokens, and unpack nested metrics</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> tiktoken
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pyspark.sql.functions <span style="color:#f92672">import</span> col, udf, pandas_udf, explode, map_keys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pyspark.sql.types <span style="color:#f92672">import</span> IntegerType, MapType, StringType, FloatType
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Dict
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># CONFIGURATION</span>
+</span></span><span style="display:flex;"><span>INPUT_TABLE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;catalog.schema.genai_raw_traces&#34;</span>
+</span></span><span style="display:flex;"><span>OUTPUT_TABLE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;catalog.schema.genai_processed_traces_gold&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Select the encoding appropriate for your model (e.g., cl100k_base for GPT-4)</span>
+</span></span><span style="display:flex;"><span>ENCODING_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;cl100k_base&#34;</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --- UDF 1: Token Counting ---</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@pandas_udf</span>(IntegerType())
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">udf_count_tokens</span>(texts: pd<span style="color:#f92672">.</span>Series) <span style="color:#f92672">-&gt;</span> pd<span style="color:#f92672">.</span>Series:
+</span></span><span style="display:flex;"><span>    encoding <span style="color:#f92672">=</span> tiktoken<span style="color:#f92672">.</span>get_encoding(ENCODING_NAME)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Handle potential None/Null values safely</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> texts<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x: len(encoding<span style="color:#f92672">.</span>encode(x)) <span style="color:#66d9ef">if</span> x <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --- UDF 2: Extract Metrics from Nested JSON/Maps ---</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Assumes &#39;assessments&#39; is a list of dictionaries or a JSON string map</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@udf</span>(MapType(StringType(), FloatType()))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">udf_extract_metrics_map</span>(assessments_str):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> assessments_str:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {}
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Logic depends on how your metrics are stored. </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Example: Parsing a list of dicts: [{&#34;name&#34;: &#34;relevance&#34;, &#34;value&#34;: 0.9}, ...]</span>
+</span></span><span style="display:flex;"><span>        data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(assessments_str) <span style="color:#66d9ef">if</span> isinstance(assessments_str, str) <span style="color:#66d9ef">else</span> assessments_str
+</span></span><span style="display:flex;"><span>        metrics_map <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Adapt this loop to your specific trace structure</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> isinstance(data, list):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> data:
+</span></span><span style="display:flex;"><span>                name <span style="color:#f92672">=</span> item<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;name&#34;</span>) <span style="color:#f92672">or</span> item<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;metric_name&#34;</span>)
+</span></span><span style="display:flex;"><span>                value <span style="color:#f92672">=</span> item<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;value&#34;</span>) <span style="color:#f92672">or</span> item<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;score&#34;</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> name <span style="color:#f92672">and</span> value <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e"># Convert boolean feedbacks (Yes/No) to float (1.0/0.0) if needed</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> str(value)<span style="color:#f92672">.</span>lower() <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;yes&#34;</span>: value <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">elif</span> str(value)<span style="color:#f92672">.</span>lower() <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;no&#34;</span>: value <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>
+</span></span><span style="display:flex;"><span>                    metrics_map[name] <span style="color:#f92672">=</span> float(value)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> metrics_map
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --- MAIN PIPELINE ---</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df_raw <span style="color:#f92672">=</span> spark<span style="color:#f92672">.</span>table(INPUT_TABLE)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. Calculate Tokens</span>
+</span></span><span style="display:flex;"><span>df_processed <span style="color:#f92672">=</span> df_raw<span style="color:#f92672">.</span>withColumn(<span style="color:#e6db74">&#34;token_count_request&#34;</span>, udf_count_tokens(col(<span style="color:#e6db74">&#34;request&#34;</span>)))\
+</span></span><span style="display:flex;"><span>                     <span style="color:#f92672">.</span>withColumn(<span style="color:#e6db74">&#34;token_count_response&#34;</span>, udf_count_tokens(col(<span style="color:#e6db74">&#34;response&#34;</span>)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. Extract Metrics Map</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Assuming your traces have an &#39;assessments&#39; or &#39;feedback&#39; column</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;assessments&#34;</span> <span style="color:#f92672">in</span> df_processed<span style="color:#f92672">.</span>columns:
+</span></span><span style="display:flex;"><span>    df_processed <span style="color:#f92672">=</span> df_processed<span style="color:#f92672">.</span>withColumn(<span style="color:#e6db74">&#34;metrics_map&#34;</span>, udf_extract_metrics_map(col(<span style="color:#e6db74">&#34;assessments&#34;</span>)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 3. Dynamic Schema Evolution (Unpacking the Map)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Identify all unique metric keys present in the data</span>
+</span></span><span style="display:flex;"><span>    keys_df <span style="color:#f92672">=</span> df_processed<span style="color:#f92672">.</span>select(explode(map_keys(col(<span style="color:#e6db74">&#34;metrics_map&#34;</span>))))<span style="color:#f92672">.</span>distinct()
+</span></span><span style="display:flex;"><span>    available_metrics <span style="color:#f92672">=</span> [row[<span style="color:#ae81ff">0</span>] <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> keys_df<span style="color:#f92672">.</span>collect()]
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Dynamic metrics found: </span><span style="color:#e6db74">{</span>available_metrics<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Promote each metric from the Map to a top-level column</span>
+</span></span><span style="display:flex;"><span>    cols <span style="color:#f92672">=</span> [col(c) <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> df_processed<span style="color:#f92672">.</span>columns <span style="color:#66d9ef">if</span> c <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;metrics_map&#39;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> metric <span style="color:#f92672">in</span> available_metrics:
+</span></span><span style="display:flex;"><span>        cols<span style="color:#f92672">.</span>append(col(<span style="color:#e6db74">&#34;metrics_map&#34;</span>)<span style="color:#f92672">.</span>getItem(metric)<span style="color:#f92672">.</span>alias(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;metric_</span><span style="color:#e6db74">{</span>metric<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    df_final <span style="color:#f92672">=</span> df_processed<span style="color:#f92672">.</span>select(<span style="color:#f92672">*</span>cols)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    df_final <span style="color:#f92672">=</span> df_processed
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4. Save to Gold Table</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Saving to </span><span style="color:#e6db74">{</span>OUTPUT_TABLE<span style="color:#e6db74">}</span><span style="color:#e6db74">...&#34;</span>)
+</span></span><span style="display:flex;"><span>df_final<span style="color:#f92672">.</span>write<span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;delta&#34;</span>)<span style="color:#f92672">.</span>mode(<span style="color:#e6db74">&#34;overwrite&#34;</span>)<span style="color:#f92672">.</span>option(<span style="color:#e6db74">&#34;mergeSchema&#34;</span>, <span style="color:#e6db74">&#34;true&#34;</span>)<span style="color:#f92672">.</span>saveAsTable(OUTPUT_TABLE)
+</span></span></code></pre></div><h3 id="3-monitoreo-automatización-con-databricks-sdk">3. Monitoreo: Automatización con Databricks SDK<a hidden class="anchor" aria-hidden="true" href="#3-monitoreo-automatización-con-databricks-sdk">#</a></h3>
+<p>El paso final es no tener que mirar esta tabla manualmente. Usando el <strong>Databricks SDK</strong>, podemos desplegar programáticamente un &ldquo;Quality Monitor&rdquo;. Esto genera automáticamente un dashboard que rastrea el <em>data drift</em> y la calidad del modelo a lo largo del tiempo.</p>
+<p><img alt="Figura 2" loading="lazy" src="/post/databricks-observability-gen-ai/databricks-lakehouse-monitoring-dashboard-genai.png"></p>
+<h4 id="-template-quality-monitor-creation">💻 Template: Quality Monitor Creation<a hidden class="anchor" aria-hidden="true" href="#-template-quality-monitor-creation">#</a></h4>
+<p>Este script conecta la tabla procesada con el sistema de monitoreo de Databricks.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Databricks Lakehouse Monitor Setup Template</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Purpose: Programmatically create a Quality Monitor for the Gold Table</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -------------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> databricks.sdk <span style="color:#f92672">import</span> WorkspaceClient
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> databricks.sdk.service.catalog <span style="color:#f92672">import</span> MonitorTimeSeries
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>w <span style="color:#f92672">=</span> WorkspaceClient()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># CONFIGURATION</span>
+</span></span><span style="display:flex;"><span>TABLE_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;catalog.schema.genai_processed_traces_gold&#34;</span>
+</span></span><span style="display:flex;"><span>ASSETS_DIR <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/Workspace/Users/your_user@domain.com/genai_monitoring&#34;</span>
+</span></span><span style="display:flex;"><span>OUTPUT_SCHEMA <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;catalog.schema&#34;</span> <span style="color:#75715e"># Where metric tables are stored</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Creating monitor for </span><span style="color:#e6db74">{</span>TABLE_NAME<span style="color:#e6db74">}</span><span style="color:#e6db74">...&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    w<span style="color:#f92672">.</span>quality_monitors<span style="color:#f92672">.</span>create(
+</span></span><span style="display:flex;"><span>        table_name<span style="color:#f92672">=</span>TABLE_NAME,
+</span></span><span style="display:flex;"><span>        assets_dir<span style="color:#f92672">=</span>ASSETS_DIR,
+</span></span><span style="display:flex;"><span>        output_schema_name<span style="color:#f92672">=</span>OUTPUT_SCHEMA,
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Configure Time Series monitoring based on request timestamp</span>
+</span></span><span style="display:flex;"><span>        time_series<span style="color:#f92672">=</span>MonitorTimeSeries(
+</span></span><span style="display:flex;"><span>            timestamp_col<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;start_time_ms&#34;</span>, <span style="color:#75715e"># Or your timestamp column</span>
+</span></span><span style="display:flex;"><span>            granularities<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;1 hour&#34;</span>, <span style="color:#e6db74">&#34;1 day&#34;</span>]
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Monitor created successfully! Check the &#39;Quality&#39; tab in Unity Catalog.&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Note: Monitor might already exist or error occurred: </span><span style="color:#e6db74">{</span>e<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><h2 id="conclusión">Conclusión<a hidden class="anchor" aria-hidden="true" href="#conclusión">#</a></h2>
+<p>Integrar las MLflow Traces con el ecosistema de datos de Unity Catalog nos permite pasar de la anécdota (&ldquo;el bot respondió mal una vez&rdquo;) a la estadística (&ldquo;la métrica de &lsquo;faithfulness&rsquo; ha caído un 5% en la última versión&rdquo;).</p>
+<p>Este enfoque nos da control total sobre los datos, permitiendo cruzar métricas de IA con datos de negocio, algo imposible si usamos herramientas de monitoreo en silos.</p>
+<h3 id="referencias-y-lectura-adicional">Referencias y Lectura Adicional<a hidden class="anchor" aria-hidden="true" href="#referencias-y-lectura-adicional">#</a></h3>
+<ul>
+<li><a href="https://docs.databricks.com/aws/en/ai-gateway/inference-tables">Databricks Documentation: Inference Tables</a></li>
+<li><a href="https://docs.databricks.com/aws/en/machine-learning/model-serving/manage-serving-endpoints">Databricks Documentation: Model Serving Endpoints</a></li>
+<li><a href="https://mlflow.org/docs/latest/llms/tracing/index.html">MLflow Tracing for GenAI</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://danielalcaide.com/es/tags/python/">Python</a></li>
+      <li><a href="https://danielalcaide.com/es/tags/databricks/">Databricks</a></li>
+      <li><a href="https://danielalcaide.com/es/tags/gen-ai/">Gen-Ai</a></li>
+    </ul>
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks on x"
+            href="https://x.com/intent/tweet/?text=Observabilidad%20en%20Agentes%20GenAI%3a%20De%20MLflow%20Traces%20a%20Dashboards%20de%20Calidad%20en%20Databricks&amp;url=https%3a%2f%2fdanielalcaide.com%2fes%2fdatabricks-observability-gen-ai%2f&amp;hashtags=python%2cdatabricks%2cgen-ai">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fdanielalcaide.com%2fes%2fdatabricks-observability-gen-ai%2f&amp;title=Observabilidad%20en%20Agentes%20GenAI%3a%20De%20MLflow%20Traces%20a%20Dashboards%20de%20Calidad%20en%20Databricks&amp;summary=Observabilidad%20en%20Agentes%20GenAI%3a%20De%20MLflow%20Traces%20a%20Dashboards%20de%20Calidad%20en%20Databricks&amp;source=https%3a%2f%2fdanielalcaide.com%2fes%2fdatabricks-observability-gen-ai%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks on reddit"
+            href="https://reddit.com/submit?url=https%3a%2f%2fdanielalcaide.com%2fes%2fdatabricks-observability-gen-ai%2f&title=Observabilidad%20en%20Agentes%20GenAI%3a%20De%20MLflow%20Traces%20a%20Dashboards%20de%20Calidad%20en%20Databricks">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fdanielalcaide.com%2fes%2fdatabricks-observability-gen-ai%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks on whatsapp"
+            href="https://api.whatsapp.com/send?text=Observabilidad%20en%20Agentes%20GenAI%3a%20De%20MLflow%20Traces%20a%20Dashboards%20de%20Calidad%20en%20Databricks%20-%20https%3a%2f%2fdanielalcaide.com%2fes%2fdatabricks-observability-gen-ai%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks on telegram"
+            href="https://telegram.me/share/url?text=Observabilidad%20en%20Agentes%20GenAI%3a%20De%20MLflow%20Traces%20a%20Dashboards%20de%20Calidad%20en%20Databricks&amp;url=https%3a%2f%2fdanielalcaide.com%2fes%2fdatabricks-observability-gen-ai%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Observabilidad en Agentes GenAI: De MLflow Traces a Dashboards de Calidad en Databricks on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Observabilidad%20en%20Agentes%20GenAI%3a%20De%20MLflow%20Traces%20a%20Dashboards%20de%20Calidad%20en%20Databricks&u=https%3a%2f%2fdanielalcaide.com%2fes%2fdatabricks-observability-gen-ai%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://danielalcaide.com/es/">Daniel Alcaide</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

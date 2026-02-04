@@ -6,8 +6,16 @@
     <description>Recent content in Posts on Daniel Alcaide</description>
     <generator>Hugo -- 0.151.0</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 11 Dec 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Feb 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://danielalcaide.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Observability in GenAI Agents: From MLflow Traces to Quality Dashboards in Databricks</title>
+      <link>https://danielalcaide.com/databricks-observability-gen-ai/</link>
+      <pubDate>Wed, 04 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>https://danielalcaide.com/databricks-observability-gen-ai/</guid>
+      <description>&lt;p&gt;Building Generative IA (GenAI) agents has shifted from being a novelty to a business necessity. However, once the &amp;ldquo;Hello World&amp;rdquo; of your RAG (Retrieval-Augmented Generation) is working, you face the real production challenge: &lt;strong&gt;How do I know what is really happening inside my agent?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Recently, Databricks has evolved &lt;strong&gt;Inference Tables&lt;/strong&gt;, enabling the capture of payloads and performance metrics directly from Model Serving. However, when we need a deep analysis of the agent&amp;rsquo;s &lt;em&gt;reasoning&lt;/em&gt;—its &amp;ldquo;thoughts,&amp;rdquo; document retrieval, and intermediate evaluations—&lt;strong&gt;MLflow Traces&lt;/strong&gt; remain the richest source of truth for understanding the &lt;strong&gt;Chain of Thought&lt;/strong&gt; and intermediate steps.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>From 1,500 traders to 6 elite: Financial risk analysis system with Databricks and Python</title>
       <link>https://danielalcaide.com/social-trading-risk-analytics/</link>

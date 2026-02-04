@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://danielalcaide.com/es/categories/</loc>
-    <lastmod>2025-12-11T00:00:00+00:00</lastmod>
+    <lastmod>2026-02-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -16,7 +16,7 @@
                 />
   </url><url>
     <loc>https://danielalcaide.com/es/</loc>
-    <lastmod>2025-12-11T00:00:00+00:00</lastmod>
+    <lastmod>2026-02-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -29,7 +29,7 @@
                 />
   </url><url>
     <loc>https://danielalcaide.com/es/tags/databricks/</loc>
-    <lastmod>2025-12-11T00:00:00+00:00</lastmod>
+    <lastmod>2026-02-04T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -39,6 +39,74 @@
                 rel="alternate"
                 hreflang="es"
                 href="https://danielalcaide.com/es/tags/databricks/"
+                />
+  </url><url>
+    <loc>https://danielalcaide.com/es/tags/gen-ai/</loc>
+    <lastmod>2026-02-04T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://danielalcaide.com/tags/gen-ai/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="https://danielalcaide.com/es/tags/gen-ai/"
+                />
+  </url><url>
+    <loc>https://danielalcaide.com/es/categories/herramientas/</loc>
+    <lastmod>2026-02-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danielalcaide.com/es/databricks-observability-gen-ai/</loc>
+    <lastmod>2026-02-04T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://danielalcaide.com/databricks-observability-gen-ai/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="https://danielalcaide.com/es/databricks-observability-gen-ai/"
+                />
+  </url><url>
+    <loc>https://danielalcaide.com/es/post/</loc>
+    <lastmod>2026-02-04T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://danielalcaide.com/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="https://danielalcaide.com/es/post/"
+                />
+  </url><url>
+    <loc>https://danielalcaide.com/es/tags/python/</loc>
+    <lastmod>2026-02-04T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://danielalcaide.com/tags/python/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="https://danielalcaide.com/es/tags/python/"
+                />
+  </url><url>
+    <loc>https://danielalcaide.com/es/tags/</loc>
+    <lastmod>2026-02-04T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://danielalcaide.com/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="https://danielalcaide.com/es/tags/"
                 />
   </url><url>
     <loc>https://danielalcaide.com/es/social-trading-risk-analytics/</loc>
@@ -57,46 +125,7 @@
     <loc>https://danielalcaide.com/es/tags/finanzas/</loc>
     <lastmod>2025-12-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://danielalcaide.com/es/post/</loc>
-    <lastmod>2025-12-11T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://danielalcaide.com/post/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="es"
-                href="https://danielalcaide.com/es/post/"
-                />
-  </url><url>
     <loc>https://danielalcaide.com/es/categories/proyectos/</loc>
     <lastmod>2025-12-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://danielalcaide.com/es/tags/python/</loc>
-    <lastmod>2025-12-11T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://danielalcaide.com/tags/python/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="es"
-                href="https://danielalcaide.com/es/tags/python/"
-                />
-  </url><url>
-    <loc>https://danielalcaide.com/es/tags/</loc>
-    <lastmod>2025-12-11T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://danielalcaide.com/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="es"
-                href="https://danielalcaide.com/es/tags/"
-                />
   </url>
 </urlset>
